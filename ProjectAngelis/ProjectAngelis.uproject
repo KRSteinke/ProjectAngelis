@@ -2,5 +2,12 @@
 	"FileVersion": 3,
 	"EngineAssociation": "4.6",
 	"Category": "",
-	"Description": ""
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "ProjectAngelis",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
 }
