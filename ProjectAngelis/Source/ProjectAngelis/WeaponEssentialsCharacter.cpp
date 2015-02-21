@@ -10,14 +10,16 @@
 AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	static ConstructorHelpers::FObjectFinder<UBlueprint> WeaponBlueprint(TEXT("Blueprint'/Game/Blueprints/Weapon/Weapon.Weapon'"));
+	/*static ConstructorHelpers::FObjectFinder<UBlueprint> WeaponBlueprint(TEXT("Blueprint'/Game/Blueprints/Weapon/Weapon.Weapon'"));
 
 	WeaponSpawn = NULL;
 
 	if (WeaponBlueprint.Succeeded())
 	{
 		WeaponSpawn = (UClass*)WeaponBlueprint.Object->GeneratedClass;
-	}
+	}*/
+
+	CurrentWeapon = NULL;
 
 	Inventory.SetNum(3, false);
 
@@ -143,11 +145,19 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 
 	void AWeaponEssentialsCharacter::FireWeapon()
 	{
-		CurrentWeapon->Fire();
+		if (CurrentWeapon != NULL)
+		{
+			CurrentWeapon->Fire();
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in Hand");
+		}
 	}
 
 	void AWeaponEssentialsCharacter::OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "OnCollision 1");
 		APistol *Pistol = Cast<APistol>(OtherActor);
 		if (Pistol)
 		{
@@ -168,6 +178,93 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 			Inventory[2] = RocketLauncher->GetClass();
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I just picked up a " + RocketLauncher->WeaponConfig.Name);
 			RocketLauncher->Destroy();
+		}
+	}
+
+	void AWeaponEssentialsCharacter::EquipPistol()
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = Instigator;
+		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(Inventory[0], SpawnParams);
+		if (Spawner)
+		{
+			if (CurrentWeapon != NULL)
+			{
+				for (int32 i = 0; i < 3; i++)
+				{
+					if (Inventory[i] == NULL && Inventory[i]->GetDefaultObject<AWeapon>()->WeaponConfig.Name == CurrentWeapon->WeaponConfig.Name)
+					{
+						Inventory[i] = NULL;
+						Inventory[i] = CurrentWeapon->GetClass();
+						GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I put " + CurrentWeapon->WeaponConfig.Name + " away in slot " + FString::FromInt(i));
+					}
+				}
+				CurrentWeapon->Destroy();
+				Spawner->CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
+				CurrentWeapon = Spawner;
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
+			}
+
+		}
+	}
+
+	void AWeaponEssentialsCharacter::EquipShotgun()
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = Instigator;
+		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(Inventory[1], SpawnParams);
+		if (Spawner)
+		{
+			if (CurrentWeapon != NULL)
+			{
+				for (int32 i = 0; i < 3; i++)
+				{
+					if (Inventory[i] == NULL && Inventory[i]->GetDefaultObject<AWeapon>()->WeaponConfig.Name == CurrentWeapon->WeaponConfig.Name)
+					{
+						Inventory[i] = NULL;
+						Inventory[i] = CurrentWeapon->GetClass();
+						GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I put " + CurrentWeapon->WeaponConfig.Name + " away in slot " + FString::FromInt(i));
+					}
+				}
+				CurrentWeapon->Destroy();
+				Spawner->CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
+				CurrentWeapon = Spawner;
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
+			}
+
+		}
+	}
+
+	void AWeaponEssentialsCharacter::EquipRocketLauncher()
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = Instigator;
+		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(Inventory[2], SpawnParams);
+		if (Spawner)
+		{
+			if (CurrentWeapon != NULL)
+			{
+				for (int32 i = 0; i < 3; i++)
+				{
+					if (Inventory[i] == NULL && Inventory[i]->GetDefaultObject<AWeapon>()->WeaponConfig.Name == CurrentWeapon->WeaponConfig.Name)
+					{
+						Inventory[i] = NULL;
+						Inventory[i] = CurrentWeapon->GetClass();
+						GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I put " + CurrentWeapon->WeaponConfig.Name + " away in slot " + FString::FromInt(i));
+					}
+				}
+				CurrentWeapon->Destroy();
+				Spawner->CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
+				CurrentWeapon = Spawner;
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
+			}
+
 		}
 	}
 
