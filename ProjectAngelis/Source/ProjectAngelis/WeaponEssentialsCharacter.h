@@ -32,11 +32,15 @@ class PROJECTANGELIS_API AWeaponEssentialsCharacter : public ACharacter
 	virtual void BeginPlay() override;
 
 	UFUNCTION()
-	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);	
 
-	
+	void EquipPistol();
+	void EquipShotgun();
+	void EquipRocketLauncher();
 	
 protected:
+
+	
 
 	//Base turn rate, in deg/sec. Other scaling may affect final turn rate
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -74,6 +78,10 @@ protected:
 	TArray<TSubclassOf<AWeapon>> Inventory;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
-	TSubobjectPtr<UBoxComponent> CollisionComp;
+	TSubobjectPtr<class UBoxComponent> CollisionComp;
+
+
+
+
 	
 };

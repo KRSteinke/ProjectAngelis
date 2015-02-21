@@ -56,24 +56,16 @@ class PROJECTANGELIS_API AWeapon : public AActor
 
 	GENERATED_BODY()
 public:
-	AWeapon(const class FPostConstructInitializeProperties& PCIP);
-
-	
+	AWeapon(const class FPostConstructInitializeProperties& PCIP);	
 
 	UFUNCTION()
 	void Instant_Fire();
-
-		
-
-	
-
-
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Config)
 	TEnumAsByte<EWeaponProjectile::ProjectileType> ProjectileType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
-	TSubobjectPtr<UBoxComponent> CollisionComp;
+	TSubobjectPtr<class UBoxComponent> CollisionComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Config)
 	TSubobjectPtr<USkeletalMeshComponent> WeaponMesh;
@@ -83,8 +75,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = Config)
 	FWeaponData WeaponConfig;
-
-
 
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
 

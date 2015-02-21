@@ -32,7 +32,6 @@ void AWeapon::Fire()
 	if (ProjectileType == EWeaponProjectile::EProjectile)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
-
 	}
 }
 
