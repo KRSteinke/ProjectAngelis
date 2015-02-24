@@ -2,5 +2,14 @@
 
 #pragma once
 
+//#ifndef __WEAPONESSENTIALS_H__
+//#define __WEAPONESSENTIALS_H__
+
 #include "Engine.h"
+
+//#define PROJECTILE_COLLISION ECC_GameTraceChannel2
+
+//#endif
+
+
 

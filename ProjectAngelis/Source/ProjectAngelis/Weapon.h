@@ -3,6 +3,8 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "Rocket.h"
+#include "Enemy.h"
 #include "Weapon.generated.h"
 
 #define TRACE_WEAPON ECC_GameTraceChannel1
@@ -54,7 +56,8 @@ UCLASS()
 class PROJECTANGELIS_API AWeapon : public AActor
 {
 
-	GENERATED_BODY()
+	GENERATED_BODY()	
+
 public:
 	AWeapon(const class FPostConstructInitializeProperties& PCIP);	
 
@@ -79,10 +82,12 @@ public:
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
 
 	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
-
 	
+	UFUNCTION()
+	virtual void ProjectileFire();	
 
-	
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class ARocket> ProjectileClass;
 
 };
 
