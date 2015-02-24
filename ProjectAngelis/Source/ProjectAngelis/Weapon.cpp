@@ -32,6 +32,7 @@ void AWeapon::Fire()
 	if (ProjectileType == EWeaponProjectile::EProjectile)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
+		ProjectileFire();
 	}
 }
 
@@ -71,5 +72,16 @@ void AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin,
 	const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
 	const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
 	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Black, true, 10000, 10.f);
+
+	AEnemy *Enemy = Cast<AEnemy>(Impact.GetActor());
+	if (Enemy)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
+		Enemy->Destroy();
+	}
 }
 
+void AWeapon::ProjectileFire()
+{
+
+}

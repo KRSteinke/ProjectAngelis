@@ -16,7 +16,7 @@ class PROJECTANGELIS_API ARocketLauncher : public AWeapon
 
 	ARocketLauncher(const class FPostConstructInitializeProperties& PCIP);
 	
-	
+	virtual void ProjectileFire() override;
 	
 	
 };

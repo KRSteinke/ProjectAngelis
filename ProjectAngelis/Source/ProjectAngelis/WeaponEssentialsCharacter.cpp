@@ -68,7 +68,9 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 		check(InputComponent);
 		InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 		InputComponent->BindAction("Fire", IE_Pressed, this, &AWeaponEssentialsCharacter::FireWeapon);
-
+		InputComponent->BindAction("Pistol", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipPistol);
+		InputComponent->BindAction("Shotgun", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipShotgun);
+		InputComponent->BindAction("RocketLauncher", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipRocketLauncher);
 
 		InputComponent->BindAxis("MoveForward", this, &AWeaponEssentialsCharacter::MoveForward);
 		InputComponent->BindAxis("MoveRight", this, &AWeaponEssentialsCharacter::MoveRight);
@@ -183,6 +185,7 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 
 	void AWeaponEssentialsCharacter::EquipPistol()
 	{
+		
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = Instigator;
@@ -206,7 +209,13 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 				CurrentWeapon = Spawner;
 				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
 			}
-
+			else
+			{
+				Spawner->CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
+				CurrentWeapon = Spawner;
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
+			}
 		}
 	}
 
@@ -235,7 +244,13 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 				CurrentWeapon = Spawner;
 				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
 			}
-
+			else
+			{
+				Spawner->CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
+				CurrentWeapon = Spawner;
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
+			}
 		}
 	}
 
@@ -259,6 +274,13 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 					}
 				}
 				CurrentWeapon->Destroy();
+				Spawner->CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
+				CurrentWeapon = Spawner;
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "My current weapon is " + CurrentWeapon->WeaponConfig.Name);
+			}
+			else
+			{
 				Spawner->CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 				Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
 				CurrentWeapon = Spawner;
