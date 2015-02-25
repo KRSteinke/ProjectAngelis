@@ -23,8 +23,7 @@ class PROJECTANGELIS_API AWeaponEssentialsCharacter : public ACharacter
 	UFUNCTION()
 	void FireWeapon();
 
-	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
-	TSubclassOf<class AWeapon> WeaponSpawn;
+	
 
 	AWeapon *CurrentWeapon;
 
@@ -45,10 +44,12 @@ class PROJECTANGELIS_API AWeaponEssentialsCharacter : public ACharacter
 	void EquipWeapon(AWeapon *Weapon);
 	void GiveDefaultWeapon();
 
-	UFUNCTION(BlueprintCallable, Category = Event)
-	virtual void BeginPlay() override;
+	void die();
 	
 protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Health)
+	int32 Health;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
 	TArray<class AWeapon*> Inventory;
@@ -84,15 +85,22 @@ protected:
 	
 	void SetupPlayerInputComponent(class UInputComponent* InputComponent);
 
-	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);	
-
-	
+	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);		
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	TSubobjectPtr<class UBoxComponent> CollisionComp;
 
+	
 
+public:
 
+	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
+	TSubclassOf<class AWeapon> WeaponSpawn;
 
+	UFUNCTION(BlueprintCallable, Category = Event)
+	virtual void BeginPlay() override;
+
+	void DecreaseHealth(int32 DecreaseValue);
+	void IncreaseHealth(int32 IncreaseValue);
 	
 };
