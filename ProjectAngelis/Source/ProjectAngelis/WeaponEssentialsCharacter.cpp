@@ -68,9 +68,11 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 		check(InputComponent);
 		InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 		InputComponent->BindAction("Fire", IE_Pressed, this, &AWeaponEssentialsCharacter::FireWeapon);
-		InputComponent->BindAction("Pistol", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipPistol);
+		InputComponent->BindAction("NextWeapon", IE_Pressed, this, &AWeaponEssentialsCharacter::NextWeapon);
+		InputComponent->BindAction("PrevWeapon", IE_Pressed, this, &AWeaponEssentialsCharacter::PrevWeapon);
+		/*InputComponent->BindAction("Pistol", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipPistol);
 		InputComponent->BindAction("Shotgun", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipShotgun);
-		InputComponent->BindAction("RocketLauncher", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipRocketLauncher);
+		InputComponent->BindAction("RocketLauncher", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipRocketLauncher);*/
 
 		InputComponent->BindAxis("MoveForward", this, &AWeaponEssentialsCharacter::MoveForward);
 		InputComponent->BindAxis("MoveRight", this, &AWeaponEssentialsCharacter::MoveRight);
@@ -87,7 +89,7 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 		InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AWeaponEssentialsCharacter::TouchStarted);
 	}
 
-	void AWeaponEssentialsCharacter::BeginPlay()
+	/*void AWeaponEssentialsCharacter::BeginPlay()
 	{
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
@@ -95,8 +97,25 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(WeaponSpawn, SpawnParams);
 		if (Spawner)
 		{
-			Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
-			CurrentWeapon = Spawner;
+Spawner->AttachRootComponentTo(Mesh, "Weapon_Socket", EAttachLocation::SnapToTarget);
+CurrentWeapon = Spawner;
+		}
+	}*/
+
+	void AWeaponEssentialsCharacter::BeginPlay()
+	{
+		GiveDefaultWeapon();
+	}
+
+	void AWeaponEssentialsCharacter::GiveDefaultWeapon()
+	{
+		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(WeaponSpawn);
+		if (Spawner)
+		{
+			Inventory[Spawner->WeaponConfig.Priority] = Spawner;
+			CurrentWeapon = Inventory[Spawner->WeaponConfig.Priority];
+			CurrentWeapon->SetOwningPawn(this);
+			CurrentWeapon->OnEquip();
 		}
 	}
 
@@ -157,33 +176,142 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 		}
 	}
 
+	void AWeaponEssentialsCharacter::NextWeapon()
+	{
+		if (Inventory[CurrentWeapon->WeaponConfig.Priority]->WeaponConfig.Priority != 2)
+		{
+			if (Inventory[CurrentWeapon->WeaponConfig.Priority + 1] == NULL)
+			{
+				for (int32 i = CurrentWeapon->WeaponConfig.Priority + 1; i < Inventory.Num(); i++)
+				{
+					if (Inventory[i] && Inventory[i]->IsA(AWeapon::StaticClass()))
+					{
+						EquipWeapon(Inventory[i]);
+					}
+				}
+			}
+			else
+			{
+				EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority + 1]);
+			}
+		}
+		else
+		{
+			EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority]);
+		}
+	}
+
+	void AWeaponEssentialsCharacter::PrevWeapon()
+	{
+		if (Inventory[CurrentWeapon->WeaponConfig.Priority]->WeaponConfig.Priority != 0)
+		{
+			if (Inventory[CurrentWeapon->WeaponConfig.Priority - 1] == NULL)
+			{
+				for (int32 i = CurrentWeapon->WeaponConfig.Priority + 1; i >= 0; i--)
+				{
+					if (Inventory[i] && Inventory[i]->IsA(AWeapon::StaticClass()))
+					{
+						EquipWeapon(Inventory[i]);
+					}
+				}
+			}
+			else
+			{
+				EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority - 1]);
+			}
+		}
+		else
+		{
+			EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority]);
+		}
+	}
+
+	void AWeaponEssentialsCharacter::EquipWeapon(AWeapon *Weapon)
+	{
+		if (CurrentWeapon != NULL)
+		{
+			CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
+			CurrentWeapon->OnUnEquip();
+			CurrentWeapon = Weapon;
+			Weapon->SetOwningPawn(this);
+			Weapon->OnEquip();
+		}
+		else
+		{
+			CurrentWeapon = Weapon;
+			CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
+			CurrentWeapon->SetOwningPawn(this);
+			Weapon->OnEquip();
+		}
+	}
+
 	void AWeaponEssentialsCharacter::OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "OnCollision 1");
+
+		AWeapon *Weapon = Cast<AWeapon>(OtherActor);
+		if (Weapon)
+		{
+			ProcessWeaponPickup(Weapon);
+		}
+
+		/*GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "OnCollision 1");
 		APistol *Pistol = Cast<APistol>(OtherActor);
 		if (Pistol)
 		{
-			Inventory[0] = Pistol->GetClass();
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I just picked up a " + Pistol->WeaponConfig.Name);
-			Pistol->Destroy();
+		Inventory[0] = Pistol->GetClass();
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I just picked up a " + Pistol->WeaponConfig.Name);
+		Pistol->Destroy();
 		}
 		AShotgun *Shotgun = Cast<AShotgun>(OtherActor);
 		if (Shotgun)
 		{
-			Inventory[1] = Shotgun->GetClass();
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I just picked up a " + Shotgun->WeaponConfig.Name);
-			Shotgun->Destroy();
+		Inventory[1] = Shotgun->GetClass();
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I just picked up a " + Shotgun->WeaponConfig.Name);
+		Shotgun->Destroy();
 		}
 		ARocketLauncher *RocketLauncher = Cast<ARocketLauncher>(OtherActor);
 		if (RocketLauncher)
 		{
-			Inventory[2] = RocketLauncher->GetClass();
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I just picked up a " + RocketLauncher->WeaponConfig.Name);
-			RocketLauncher->Destroy();
+		Inventory[2] = RocketLauncher->GetClass();
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "I just picked up a " + RocketLauncher->WeaponConfig.Name);
+		RocketLauncher->Destroy();
+		}*/
+	}
+
+	void AWeaponEssentialsCharacter::ProcessWeaponPickup(AWeapon *Weapon)
+	{
+		if (Weapon != NULL)
+		{
+			if (Inventory[Weapon->WeaponConfig.Priority] == NULL)
+			{
+				AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(Weapon->GetClass());
+				if (Spawner)
+				{
+					Inventory[Spawner->WeaponConfig.Priority] = Spawner;
+					GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "You just picked up a " + Inventory[Spawner->WeaponConfig.Priority]->WeaponConfig.Name);
+				}
+				Weapon->Destroy();
+			}
+			else
+			{
+				if (Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo >= 0 && Weapon->CurrentAmmo <= (Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo - Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo))
+				{
+					Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo += Weapon->CurrentAmmo;
+					GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Added " + Weapon->CurrentAmmo);
+					Weapon->Destroy();
+				}
+				else{
+					if (Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo > Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo)
+					{
+						Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo = Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo;
+					}
+				}
+
+			}
 		}
 	}
 
-	void AWeaponEssentialsCharacter::EquipPistol()
+	/*void AWeaponEssentialsCharacter::EquipPistol()
 	{
 		
 		FActorSpawnParameters SpawnParams;
@@ -288,7 +416,7 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 			}
 
 		}
-	}
+	}*/
 
 
 

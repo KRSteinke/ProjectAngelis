@@ -23,24 +23,35 @@ class PROJECTANGELIS_API AWeaponEssentialsCharacter : public ACharacter
 	UFUNCTION()
 	void FireWeapon();
 
-	UPROPERTY(VisibleAnywhere, Category = Spawn)
+	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
 	TSubclassOf<class AWeapon> WeaponSpawn;
 
 	AWeapon *CurrentWeapon;
 
-	UFUNCTION()
-	virtual void BeginPlay() override;
+	//UFUNCTION()
+	//virtual void BeginPlay() override;
 
 	UFUNCTION()
 	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);	
 
-	void EquipPistol();
+	/*void EquipPistol();
 	void EquipShotgun();
-	void EquipRocketLauncher();
+	void EquipRocketLauncher();*/
+	
+	void ProcessWeaponPickup(AWeapon *Weapon);
+
+	void NextWeapon();
+	void PrevWeapon();
+	void EquipWeapon(AWeapon *Weapon);
+	void GiveDefaultWeapon();
+
+	UFUNCTION(BlueprintCallable, Category = Event)
+	virtual void BeginPlay() override;
 	
 protected:
 
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
+	TArray<class AWeapon*> Inventory;
 
 	//Base turn rate, in deg/sec. Other scaling may affect final turn rate
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -75,7 +86,7 @@ protected:
 
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);	
 
-	TArray<TSubclassOf<AWeapon>> Inventory;
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	TSubobjectPtr<class UBoxComponent> CollisionComp;
