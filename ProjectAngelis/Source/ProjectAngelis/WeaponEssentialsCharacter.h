@@ -45,8 +45,15 @@ class PROJECTANGELIS_API AWeaponEssentialsCharacter : public ACharacter
 	void EquipWeapon(AWeapon *Weapon);
 	void GiveDefaultWeapon();
 
+	
+	void IncreaseHealth(int32 IncreaseValue);
+
+	void Die();
+
 	UFUNCTION(BlueprintCallable, Category = Event)
 	virtual void BeginPlay() override;
+
+	
 	
 protected:
 
@@ -91,8 +98,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	TSubobjectPtr<class UBoxComponent> CollisionComp;
 
+public:
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Health)
+	int32 Health;
 
-
+	void DecreaseHealth(int32 DecreaseValue);
 	
 };
