@@ -58,7 +58,6 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 
 	//Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character)
 	//are set in the derived blueprint asset named MyCharacter(to avoid direct content references in C++)
-	//BeginPlay();
 }
 	//Input
 
@@ -105,17 +104,14 @@ CurrentWeapon = Spawner;
 
 	void AWeaponEssentialsCharacter::BeginPlay()
 	{
-		Health = 100;
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "BeginPlay");
 		GiveDefaultWeapon();
 	}
 
 	void AWeaponEssentialsCharacter::GiveDefaultWeapon()
-	{		
+	{
 		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(WeaponSpawn);
 		if (Spawner)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "GiveDefaultWeapon");
 			Inventory[Spawner->WeaponConfig.Priority] = Spawner;
 			CurrentWeapon = Inventory[Spawner->WeaponConfig.Priority];
 			CurrentWeapon->SetOwningPawn(this);
@@ -182,78 +178,51 @@ CurrentWeapon = Spawner;
 
 	void AWeaponEssentialsCharacter::NextWeapon()
 	{
-		if (CurrentWeapon != NULL){
-			if (Inventory[CurrentWeapon->WeaponConfig.Priority]->WeaponConfig.Priority != 2)
+		if (Inventory[CurrentWeapon->WeaponConfig.Priority]->WeaponConfig.Priority != 2)
+		{
+			if (Inventory[CurrentWeapon->WeaponConfig.Priority + 1] == NULL)
 			{
-				if (Inventory[CurrentWeapon->WeaponConfig.Priority + 1] == NULL)
+				for (int32 i = CurrentWeapon->WeaponConfig.Priority + 1; i < Inventory.Num(); i++)
 				{
-					for (int32 i = CurrentWeapon->WeaponConfig.Priority + 1; i < Inventory.Num(); i++)
+					if (Inventory[i] && Inventory[i]->IsA(AWeapon::StaticClass()))
 					{
-						if (Inventory[i] && Inventory[i]->IsA(AWeapon::StaticClass()))
-						{
-							EquipWeapon(Inventory[i]);
-						}
+						EquipWeapon(Inventory[i]);
 					}
-				}
-				else
-				{
-					EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority + 1]);
 				}
 			}
 			else
 			{
-				EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority]);
+				EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority + 1]);
 			}
 		}
 		else
 		{
-			if (Inventory[0] != NULL)
-				EquipWeapon(Inventory[0]);
-			else if (Inventory[1] != NULL)
-				EquipWeapon(Inventory[1]);
-			else if (Inventory[2] != NULL)
-				EquipWeapon(Inventory[2]);
-			else
-				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+			EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority]);
 		}
-
 	}
 
 	void AWeaponEssentialsCharacter::PrevWeapon()
 	{
-		if (CurrentWeapon != NULL){
-			if (Inventory[CurrentWeapon->WeaponConfig.Priority]->WeaponConfig.Priority != 0)
+		if (Inventory[CurrentWeapon->WeaponConfig.Priority]->WeaponConfig.Priority != 0)
+		{
+			if (Inventory[CurrentWeapon->WeaponConfig.Priority - 1] == NULL)
 			{
-				if (Inventory[CurrentWeapon->WeaponConfig.Priority - 1] == NULL)
+				for (int32 i = CurrentWeapon->WeaponConfig.Priority + 1; i >= 0; i--)
 				{
-					for (int32 i = CurrentWeapon->WeaponConfig.Priority + 1; i >= 0; i--)
+					if (Inventory[i] && Inventory[i]->IsA(AWeapon::StaticClass()))
 					{
-						if (Inventory[i] && Inventory[i]->IsA(AWeapon::StaticClass()))
-						{
-							EquipWeapon(Inventory[i]);
-						}
+						EquipWeapon(Inventory[i]);
 					}
-				}
-				else
-				{
-					EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority - 1]);
 				}
 			}
 			else
 			{
-				EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority]);
+				EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority - 1]);
 			}
 		}
 		else
 		{
-			if (Inventory[0] != NULL)
-				EquipWeapon(Inventory[0]);
-			else if (Inventory[1] != NULL)
-				EquipWeapon(Inventory[1]);
-			else if (Inventory[2] != NULL)
-				EquipWeapon(Inventory[2]);
-			else
-				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+			EquipWeapon(Inventory[CurrentWeapon->WeaponConfig.Priority]);
 		}
 	}
 
@@ -340,24 +309,6 @@ CurrentWeapon = Spawner;
 
 			}
 		}
-	}
-
-	void AWeaponEssentialsCharacter::DecreaseHealth(int32 DecreaseValue)
-	{
-		Health -= DecreaseValue;
-		if (Health == 0)
-			die();
-	}
-
-	void AWeaponEssentialsCharacter::IncreaseHealth(int32 IncreaseValue)
-	{
-		Health += IncreaseValue;
-	}
-	void AWeaponEssentialsCharacter::die()
-	{
-		this->Destroy();
-		this->CurrentWeapon->Destroy();
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "You and all your friends are dead. Game over.");
 	}
 
 	/*void AWeaponEssentialsCharacter::EquipPistol()
