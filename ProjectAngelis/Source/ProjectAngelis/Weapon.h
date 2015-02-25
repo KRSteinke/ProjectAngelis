@@ -7,6 +7,8 @@
 #include "Enemy.h"
 #include "Weapon.generated.h"
 
+class AWeaponEssentialsCharacter;
+
 #define TRACE_WEAPON ECC_GameTraceChannel1
 
 /**
@@ -27,38 +29,56 @@ namespace EWeaponProjectile
 
 }
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FWeaponData
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(EditDefaultsOnly, Category = Ammo)
-		int32 MaxAmmo;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ammo)
+	int32 MaxAmmo;
 
-	UPROPERTY(EditDefaultsOnly, Category = Config)
-		float TimeBetweenShots;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	int32 MaxClip;
 
-	UPROPERTY(EditDefaultsOnly, Category = Ammo)
-		int32 ShotCost;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	float TimeBetweenShots;
 
-	UPROPERTY(EditDefaultsOnly, Category = Config)
-		float WeaponRange;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ammo)
+	int32 ShotCost;
 
-	UPROPERTY(EditDefaultsOnly, Category = Config)
-		float WeaponSpread;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	float WeaponRange;
 
-	UPROPERTY(EditDefaultsOnly, Category = Config)
-		FString Name;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	float WeaponSpread;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	FString Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	UTexture2D* SplashArt;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	int32 Priority;
 };
 
 UCLASS()
 class PROJECTANGELIS_API AWeapon : public AActor
 {
 
-	GENERATED_BODY()	
+	GENERATED_BODY()
+
+	void AttachToPlayer(); 
+	void DetachFromPlayer();
 
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	int32 CurrentAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	int32 CurrentClip;
+
 	AWeapon(const class FPostConstructInitializeProperties& PCIP);	
 
 	UFUNCTION()
@@ -78,16 +98,26 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = Config)
 	FWeaponData WeaponConfig;
-
-	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
-
-	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
-	
+		
 	UFUNCTION()
 	virtual void ProjectileFire();	
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class ARocket> ProjectileClass;
+
+	void OnEquip();
+	void OnUnEquip();
+
+	void SetOwningPawn(AWeaponEssentialsCharacter *NewOwner);
+
+	void ReloadAmmo();
+
+protected:
+	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
+
+	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
+
+	AWeaponEssentialsCharacter *MyPawn;
 
 };
 
