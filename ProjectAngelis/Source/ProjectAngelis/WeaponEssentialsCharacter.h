@@ -103,6 +103,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Health)
 	int32 Health;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Inventory)
+	int32 InventorySize;
+
 	void DecreaseHealth(int32 DecreaseValue);
 	
 };
