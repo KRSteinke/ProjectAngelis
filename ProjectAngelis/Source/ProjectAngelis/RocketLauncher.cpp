@@ -17,8 +17,8 @@ void ARocketLauncher::ProjectileFire()
 	{
 		if (ProjectileClass != NULL)
 		{
-			FVector MFLoc = WeaponMesh->GetSocketLocation("Weapon_Socket");
-			FRotator MFRot = WeaponMesh->GetSocketRotation("Weapon_Socket");
+			FVector MFLoc = WeaponMesh->GetSocketLocation("MF");
+			FRotator MFRot = WeaponMesh->GetSocketRotation("MF");
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Instigator = Instigator;
 			ARocket *const Rocket = GetWorld()->SpawnActor<ARocket>(ProjectileClass, MFLoc, MFRot, SpawnParams);
