@@ -106,6 +106,7 @@ CurrentWeapon = Spawner;
 	{
 		Health = 100;
 		InventorySize = 3;
+		Currency = 0;
 		GiveDefaultWeapon();
 	}
 
@@ -409,6 +410,20 @@ CurrentWeapon = Spawner;
 		this->Destroy();
 		this->CurrentWeapon->Destroy();
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "Die");
+	}
+
+	void AWeaponEssentialsCharacter::IncreaseCurrency(int32 IncreaseValue){
+		Currency += IncreaseValue;
+	}
+
+	bool AWeaponEssentialsCharacter::DecreaseCurrency(int32 DecreaseValue){
+		if (Currency < DecreaseValue)
+			return false;
+		else
+		{
+			Currency -= DecreaseValue;
+			return true;
+		}
 	}
 
 	/*void AWeaponEssentialsCharacter::EquipPistol()

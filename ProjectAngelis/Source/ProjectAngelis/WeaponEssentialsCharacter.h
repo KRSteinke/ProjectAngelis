@@ -101,11 +101,20 @@ protected:
 public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Health)
+	int32 Currency;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Health)
 	int32 Health;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Inventory)
 	int32 InventorySize;
 
 	void DecreaseHealth(int32 DecreaseValue);
+
+	void IncreaseHealth(int32 IncreaseValue);
+
+	void IncreaseCurrency(int32 IncreaseValue);
+
+	bool DecreaseCurrency(int32 DecreaseValue);
 	
 };
