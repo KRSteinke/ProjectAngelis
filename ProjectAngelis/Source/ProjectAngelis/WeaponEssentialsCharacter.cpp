@@ -105,6 +105,7 @@ CurrentWeapon = Spawner;
 	void AWeaponEssentialsCharacter::BeginPlay()
 	{
 		Health = 100;
+		InventorySize = 3;
 		GiveDefaultWeapon();
 	}
 
@@ -181,6 +182,32 @@ CurrentWeapon = Spawner;
 	{
 		if (CurrentWeapon != NULL)
 		{
+			for (int32 i = 1; i < InventorySize; i++)
+			{
+				if (Inventory[(CurrentWeapon->WeaponConfig.Priority + i) % InventorySize] != NULL)
+				{
+					EquipWeapon(Inventory[(CurrentWeapon->WeaponConfig.Priority + i) % InventorySize]);
+					return;
+				}
+			}		
+		}
+		else
+		{
+			if (Inventory[0] != NULL)
+				EquipWeapon(Inventory[0]);
+			else if (Inventory[1] != NULL)
+				EquipWeapon(Inventory[1]);
+			else if (Inventory[2] != NULL)
+				EquipWeapon(Inventory[2]);
+			else
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+		}
+	}
+
+	/*void AWeaponEssentialsCharacter::NextWeapon()
+	{
+		if (CurrentWeapon != NULL)
+		{
 			if (Inventory[CurrentWeapon->WeaponConfig.Priority]->WeaponConfig.Priority != 2)
 			{
 				if (Inventory[CurrentWeapon->WeaponConfig.Priority + 1] == NULL)
@@ -214,9 +241,35 @@ CurrentWeapon = Spawner;
 			else
 				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 		}
-	}
+	}*/
 
 	void AWeaponEssentialsCharacter::PrevWeapon()
+	{
+		if (CurrentWeapon != NULL)
+		{
+			for (int32 i = 1; i < InventorySize; i++)
+			{
+				if (Inventory[((CurrentWeapon->WeaponConfig.Priority + InventorySize) - i) % InventorySize] != NULL)
+				{
+					EquipWeapon(Inventory[((CurrentWeapon->WeaponConfig.Priority + InventorySize) - i) % InventorySize]);
+					return;
+				}
+			}
+		}
+		else
+		{
+			if (Inventory[0] != NULL)
+				EquipWeapon(Inventory[0]);
+			else if (Inventory[1] != NULL)
+				EquipWeapon(Inventory[1]);
+			else if (Inventory[2] != NULL)
+				EquipWeapon(Inventory[2]);
+			else
+				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+		}
+	}
+
+	/*void AWeaponEssentialsCharacter::PrevWeapon()
 	{
 		if (CurrentWeapon != NULL)
 		{
@@ -253,7 +306,7 @@ CurrentWeapon = Spawner;
 			else
 				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 		}
-	}
+	}*/
 
 	void AWeaponEssentialsCharacter::EquipWeapon(AWeapon *Weapon)
 	{
