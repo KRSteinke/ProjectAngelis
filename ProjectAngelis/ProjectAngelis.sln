@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjectAngelis", "Intermediate\ProjectFiles\ProjectAngelis.vcxproj", "{38C5880C-B309-4B4B-9808-74809AB3FFAD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjectAngelis", "Intermediate\ProjectFiles\ProjectAngelis.vcxproj", "{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -14,16 +14,16 @@ Global
 		Shipping|Windows = Shipping|Windows
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.DebugGame Editor|Windows.ActiveCfg = DebugGame_Editor|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.DebugGame Editor|Windows.Build.0 = DebugGame_Editor|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.DebugGame|Windows.ActiveCfg = DebugGame_Game|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.DebugGame|Windows.Build.0 = DebugGame_Game|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.Development Editor|Windows.ActiveCfg = Development_Editor|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.Development Editor|Windows.Build.0 = Development_Editor|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.Development|Windows.ActiveCfg = Development_Game|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.Development|Windows.Build.0 = Development_Game|x64
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.Shipping|Windows.ActiveCfg = Shipping_Game|Win32
-		{38C5880C-B309-4B4B-9808-74809AB3FFAD}.Shipping|Windows.Build.0 = Shipping_Game|Win32
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.DebugGame Editor|Windows.ActiveCfg = DebugGame_Editor|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.DebugGame Editor|Windows.Build.0 = DebugGame_Editor|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.DebugGame|Windows.ActiveCfg = DebugGame_Game|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.DebugGame|Windows.Build.0 = DebugGame_Game|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.Development Editor|Windows.ActiveCfg = Development_Editor|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.Development Editor|Windows.Build.0 = Development_Editor|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.Development|Windows.ActiveCfg = Development_Game|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.Development|Windows.Build.0 = Development_Game|x64
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.Shipping|Windows.ActiveCfg = Shipping_Game|Win32
+		{06CE375B-DAC9-402B-AC27-AB5DE7A5D923}.Shipping|Windows.Build.0 = Shipping_Game|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
