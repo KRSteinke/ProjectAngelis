@@ -206,9 +206,9 @@ UCLASS(config = Game, collapsecategories, hidecategories = (Clothing, Lighting, 
 class PROJECTANGELIS_API AIntegratedCharacterNoAI : public ACharacter
 {
 	GENERATED_BODY()
-	
-	AIntegratedCharacterNoAI(const class FPostConstructInitializeProperties& PCIP);
-	
+
+		AIntegratedCharacterNoAI(const class FPostConstructInitializeProperties& PCIP);
+
 	//For now, do not uncomment.
 	//virtual void SetBase(UPrimitiveComponent* NewBase, const FName BoneName = NAME_None, bool bNotifyActor = true) override;
 
@@ -218,19 +218,19 @@ class PROJECTANGELIS_API AIntegratedCharacterNoAI : public ACharacter
 
 	/** Stored past positions of this player.  Used for bot aim error model, and for server side hit resolution. */
 	UPROPERTY()
-	TArray<FSavedPosition> SavedPositions;
+		TArray<FSavedPosition> SavedPositions;
 
 	/** Maximum interval to hold saved positions for. */
 	UPROPERTY()
-	float MaxSavedPositionAge;
-	
+		float MaxSavedPositionAge;
+
 	/** Returns this character's position PredictionTime seconds ago. */
 	UFUNCTION(BlueprintCallable, Category = Pawn)
-	virtual FVector GetRewindLocation(float PredictionTime);
+		virtual FVector GetRewindLocation(float PredictionTime);
 
 	/** Max time server will look back to found client synchronized shot position. */
 	UPROPERTY(EditAnyWhere, Category = "Weapon")
-	float MaxShotSynchDelay;
+		float MaxShotSynchDelay;
 
 	/** Returns most recent position with bShotSpawned. */
 	virtual FVector GetDelayedShotPosition();
@@ -240,20 +240,20 @@ class PROJECTANGELIS_API AIntegratedCharacterNoAI : public ACharacter
 	virtual bool DelayedShotFound();
 
 	/** returns a simplified set of SavedPositions containing only the latest position for a given frame (i.e. each element has a unique Time) */
-	void GetSimplifiedSavedPositions(TArray<FSavedPosition>& OutPositions) const;	
+	void GetSimplifiedSavedPositions(TArray<FSavedPosition>& OutPositions) const;
 
 	/** counters of ammo for which the pawn doesn't yet have the corresponding weapon in its inventory */
 	UPROPERTY()
-	TArray<FStoredAmmo> SavedAmmo;
+		TArray<FStoredAmmo> SavedAmmo;
 
 	// use this to iterate inventory
 	template<typename> friend class TInventoryIterator;
 
 	/** apply HeadScale to mesh */
 	UFUNCTION()
-	virtual void HeadScaleUpdated();
+		virtual void HeadScaleUpdated();
 
-//BlueprintReadOnly should not be used on private members
+	//BlueprintReadOnly should not be used on private members
 
 public:
 	/** First person camera */
@@ -262,72 +262,70 @@ public:
 
 	/** Limit to armor stacking */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
-	int32 MaxStackedArmor;	
+		int32 MaxStackedArmor;
 
-	//Was replicated before
-	UPROPERTY(BlueprintReadWrite, Category = Pawn)
-	int32 Health;
+
+	UPROPERTY(BlueprintReadWrite, replicated, Category = Pawn)
+		int32 Health;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Pawn)
-	int32 HealthMax;
+		int32 HealthMax;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Pawn)
-	int32 SuperHealthMax;
+		int32 SuperHealthMax;
 
 	/** head bone/socket for headshots */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Pawn)
-	FName HeadBone;
+		FName HeadBone;
 	/** head Z offset from head bone */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Pawn)
-	float HeadHeight;
+		float HeadHeight;
 	/** radius around head location that counts as headshot at 1.0 head scaling */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Pawn)
-	float HeadRadius;
+		float HeadRadius;
 	/** head scale factor (generally for use at runtime) */
-	//Was Replicated, ReplicatedUsing = HeadScaleUpdated, 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Pawn)
-	float HeadScale;
+	UPROPERTY(EditDefaultsOnly, ReplicatedUsing = HeadScaleUpdated, BlueprintReadOnly, Category = Pawn)
+		float HeadScale;
 
 	/** multiplier to damage caused by this Pawn */
 	//Was replicated
-	UPROPERTY(BlueprintReadWrite, Category = Pawn)
-	float DamageScaling;
+	UPROPERTY(BlueprintReadWrite, replicated, Category = Pawn)
+		float DamageScaling;
 
 	/** accessors to FireRateMultiplier */
 	UFUNCTION(BlueprintCallable, Category = Pawn)
-	float GetFireRateMultiplier();
+		float GetFireRateMultiplier();
 
-	//Replicated, ReplicatedUsing = PlayTakeHitEffects
+	//ReplicatedUsing = PlayTakeHitEffects, function not added yet
 	UPROPERTY(BlueprintReadWrite, Category = Pawn)
-	FTakeHitInfo LastTakeHitInfo;
+		FTakeHitInfo LastTakeHitInfo;
 
 	/** time of last SetLastTakeHitInfo() - authority only */
 	UPROPERTY(BlueprintReadOnly, Category = Pawn)
-	float LastTakeHitTime;
+		float LastTakeHitTime;
 
 protected:
 
 	/** multiplier to firing speed */
-	//Replicated, ReplicatedUsing = FireRateChanged
+	//Replicated, ReplicatedUsing = FireRateChanged, function not yet added
 	UPROPERTY()
-	float FireRateMultiplier;
+		float FireRateMultiplier;
 
 	/** indicates character is (mostly) invisible so AI only sees at short range, homing effects can't target the character, etc */
-	//ReplicatedUsing = OnRep_Invisible,
-	UPROPERTY(BlueprintReadOnly,  Category = Pawn)
-	bool bInvisible;
+	//ReplicatedUsing = OnRep_Invisible, function not yet added
+	UPROPERTY(BlueprintReadOnly, Category = Pawn)
+		bool bInvisible;
 
 public:
-	
+
 	inline bool IsInvisible() const
 	{
 		return bInvisible;
 	}
-	
+
 	/** whether spawn protection may potentially be applied (still must meet time since spawn check in UTGameMode)
 	* set to false after firing weapon or any other action that is considered offensive
 	*/
-	//Replicated
-	UPROPERTY(BlueprintReadOnly, Category = Pawn)
-	bool bSpawnProtectionEligible;
+	UPROPERTY(BlueprintReadOnly, Replicated, Category = Pawn)
+		bool bSpawnProtectionEligible;
 
 	/** set temporarily during client reception of replicated properties because replicated position and switches to ragdoll may be processed out of the desired order
 	* when set, OnRep_ReplicatedMovement() will be called after switching to ragdoll
@@ -337,25 +335,26 @@ public:
 	/** set to prevent firing (does not stop already started firing, call StopFiring() for that) */
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = Pawn)
-	bool bDisallowWeaponFiring;
+		bool bDisallowWeaponFiring;
 
 public:
-	
+
 	inline bool IsFiringDisabled() const
 	{
 		return bDisallowWeaponFiring;
 	}
 
 	/** Used to replicate bIsDodgeRolling to non owning clients */
+	//For now leave the replicatedusing out until the function is put in.
 	//ReplicatedUsing = OnRepDodgeRolling
 	UPROPERTY()
-	bool bRepDodgeRolling;
+		bool bRepDodgeRolling;
 
 	UFUNCTION(BlueprintCallable, Category = "Pawn")
-	virtual EAllowedSpecialMoveAnims AllowedSpecialMoveAnims();
+		virtual EAllowedSpecialMoveAnims AllowedSpecialMoveAnims();
 
 	UFUNCTION(BlueprintCallable, Category = Pawn)
-	virtual float GetRemoteViewPitch();
+		virtual float GetRemoteViewPitch();
 
 	virtual APhysicsVolume* GetPawnPhysicsVolume() const override
 	{
@@ -371,29 +370,132 @@ public:
 	}
 
 public:
-		inline bool IsRagdoll() const
-		{
-			return /*bFeigningDeath || bInRagdollRecovery ||*/ (RootComponent == GetMesh() && GetMesh()->IsSimulatingPhysics());
-		}
+	inline bool IsRagdoll() const
+	{
+		return /*bFeigningDeath || bInRagdollRecovery ||*/ (RootComponent == GetMesh() && GetMesh()->IsSimulatingPhysics());
+	}
 
-		virtual void BeginPlay() override;
-		virtual void PostInitializeComponents() override;
+	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
 
-		virtual void UnPossessed() override;
-
-		/** Get Max weapon land bob deflection at landing velocity Z of FullWeaponLandBobVelZ+WeaponLandBobThreshold */
-		UPROPERTY()
+	/** Get Max weapon land bob deflection at landing velocity Z of FullWeaponLandBobVelZ+WeaponLandBobThreshold */
+	UPROPERTY()
 		float DefaultBaseEyeHeight;
 
-		/** runtime material instance for setting body material parameters (team color, etc) */
-		UPROPERTY(BlueprintReadOnly, Category = Pawn)
-		UMaterialInstanceDynamic* BodyMI;
+	/** runtime material instance for setting body material parameters (team color, etc) */
+	UPROPERTY(BlueprintReadOnly, Category = Pawn)
+	UMaterialInstanceDynamic* BodyMI;
 
-		UFUNCTION(BlueprintCallable, Category = "Pawn")
-		virtual void StopFiring();
+	// firemodes with input currently being held down (pending or actually firing)
+	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
+	TArray<uint8> PendingFire;
 
-		// firemodes with input currently being held down (pending or actually firing)
-		UPROPERTY(BlueprintReadOnly, Category = "Pawn")
-		TArray<uint8> PendingFire;
+protected:
+
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = AmbientSoundUpdated, Category = "Pawn")
+		USoundBase* AmbientSound;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
+		UAudioComponent* AmbientSoundComp;
+
+	/** Ambient sound played only on owning client */
+	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
+		USoundBase* LocalAmbientSound;
+
+	/** Volume of Ambient sound played only on owning client */
+	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
+		float LocalAmbientVolume;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
+		UAudioComponent* LocalAmbientSoundComp;
+
+	/** Status ambient sound played only on owning client */
+	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
+		USoundBase* StatusAmbientSound;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
+		UAudioComponent* StatusAmbientSoundComp;
+
+public:
+
+	/** Ambient sound played while low in health*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sounds)
+		USoundBase* LowHealthAmbientSound;
+
+	/** Health threshold for low health ambient sound */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sounds)
+		int32 LowHealthAmbientThreshold;
+
+	/** sets replicated ambient (looping) sound on this Pawn
+	* only one ambient sound can be set at a time
+	* pass bClear with a valid NewAmbientSound to remove only if NewAmbientSound == CurrentAmbientSound
+	*/
+	UFUNCTION(BlueprintCallable, Category = Audio)
+		virtual void SetAmbientSound(USoundBase* NewAmbientSound, bool bClear = false);
+
+	UFUNCTION()
+		void AmbientSoundUpdated();
+
+	/** sets local (not replicated) ambient (looping) sound on this Pawn
+	* only one ambient sound can be set at a time
+	* pass bClear with a valid NewAmbientSound to remove only if NewAmbientSound == CurrentAmbientSound
+	*/
+	UFUNCTION(BlueprintCallable, Category = Audio)
+		virtual void SetLocalAmbientSound(USoundBase* NewAmbientSound, float SoundVolume = 0.f, bool bClear = false);
+
+	UFUNCTION()
+		void LocalAmbientSoundUpdated();
+
+	/** sets local (not replicated) statud ambient (looping) sound on this Pawn
+	* only one status ambient sound can be set at a time
+	* pass bClear with a valid NewAmbientSound to remove only if NewAmbientSound == CurrentAmbientSound
+	*/
+	UFUNCTION(BlueprintCallable, Category = Audio)
+	virtual void SetStatusAmbientSound(USoundBase* NewAmbientSound, float SoundVolume = 0.f, float PitchMultipier = 1.f, bool bClear = false);
+
+	UFUNCTION()
+		void StatusAmbientSoundUpdated();
+
+protected:
+	/** last time PlayFootstep() was called, for timing footsteps when animations are disabled */
+	float LastFootstepTime;
+
+	/** last FootNum for PlayFootstep(), for alternating when animations are disabled */
+	uint8 LastFoot;
+
+	/** replicated overlays, bits match entries in UTGameState's OverlayMaterials array */
+	//UPROPERTY(Replicated, ReplicatedUsing = UpdateCharOverlays)
+	//uint16 CharOverlayFlags;
+	/** mesh with current active overlay material on it (created dynamically when needed) */
+	UPROPERTY()
+	USkeletalMeshComponent* OverlayMesh;
+
+	/** replicated character material override */
+	//UPROPERTY(Replicated, ReplicatedUsing = UpdateSkin)
+	//UMaterialInterface* ReplicatedBodyMaterial;
+
+	//Already declared?
+	/** runtime material instance for setting body material parameters (team color, etc) */
+	//UPROPERTY(BlueprintReadOnly, Category = Pawn)
+	//UMaterialInstanceDynamic* BodyMI;
+
+	/** timed full body color flash implemented via material parameter */
+	UPROPERTY(BlueprintReadOnly, Category = Effects)
+	const UCurveLinearColor* BodyColorFlashCurve;
+	/** time elapsed in BodyColorFlashCurve */
+	UPROPERTY(BlueprintReadOnly, Category = Effects)
+	float BodyColorFlashElapsedTime;
+	/** set timed body color flash (generally for hit effects)
+	* NOT REPLICATED
+	*/
+	UFUNCTION(BlueprintCallable, Category = Effects)
+	virtual void SetBodyColorFlash(const UCurveLinearColor* ColorCurve, bool bRimOnly);
+
+
+
 
 };
+
+
+
