@@ -384,11 +384,11 @@ public:
 
 	/** runtime material instance for setting body material parameters (team color, etc) */
 	UPROPERTY(BlueprintReadOnly, Category = Pawn)
-	UMaterialInstanceDynamic* BodyMI;
+		UMaterialInstanceDynamic* BodyMI;
 
 	// firemodes with input currently being held down (pending or actually firing)
 	UPROPERTY(BlueprintReadOnly, Category = "Pawn")
-	TArray<uint8> PendingFire;
+		TArray<uint8> PendingFire;
 
 protected:
 
@@ -455,7 +455,7 @@ public:
 	virtual void SetStatusAmbientSound(USoundBase* NewAmbientSound, float SoundVolume = 0.f, float PitchMultipier = 1.f, bool bClear = false);
 
 	UFUNCTION()
-		void StatusAmbientSoundUpdated();
+	void StatusAmbientSoundUpdated();
 
 protected:
 	/** last time PlayFootstep() was called, for timing footsteps when animations are disabled */
@@ -480,22 +480,278 @@ protected:
 	//UPROPERTY(BlueprintReadOnly, Category = Pawn)
 	//UMaterialInstanceDynamic* BodyMI;
 
+
+
 	/** timed full body color flash implemented via material parameter */
 	UPROPERTY(BlueprintReadOnly, Category = Effects)
-	const UCurveLinearColor* BodyColorFlashCurve;
+		const UCurveLinearColor* BodyColorFlashCurve;
 	/** time elapsed in BodyColorFlashCurve */
 	UPROPERTY(BlueprintReadOnly, Category = Effects)
-	float BodyColorFlashElapsedTime;
+		float BodyColorFlashElapsedTime;
 	/** set timed body color flash (generally for hit effects)
 	* NOT REPLICATED
 	*/
 	UFUNCTION(BlueprintCallable, Category = Effects)
-	virtual void SetBodyColorFlash(const UCurveLinearColor* ColorCurve, bool bRimOnly);
+		virtual void SetBodyColorFlash(const UCurveLinearColor* ColorCurve, bool bRimOnly);
+
+	/** updates time and sets BodyColorFlash in the character material */
+	virtual void UpdateBodyColorFlash(float DeltaTime);
+
+	//--------------------------
+	// Weapon bob and eye offset
+
+	/** Current 1st person weapon deflection due to running bob. */
+	UPROPERTY(BlueprintReadWrite, Category = WeaponBob)
+		FVector CurrentWeaponBob;
+
+	/** Max 1st person weapon bob deflection with axes based on player view */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		FVector WeaponBobMagnitude;
+
+	/** Z deflection of first person weapon when player jumps */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		FVector WeaponJumpBob;
+
+	/** deflection of first person weapon when player dodges */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		FVector WeaponDodgeBob;
+
+	/** deflection of first person weapon when player slides */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		FVector WeaponSlideBob;
+
+	/** Z deflection of first person weapon when player lands */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		FVector WeaponLandBob;
+
+	/** Desired 1st person weapon deflection due to jumping. */
+	UPROPERTY(BlueprintReadWrite, Category = WeaponBob)
+		FVector DesiredJumpBob;
+
+	/* Current jump bob (interpolating to DesiredJumpBob)*/
+	UPROPERTY(BlueprintReadWrite, Category = WeaponBob)
+		FVector CurrentJumpBob;
+
+	/** Time used for weapon bob sinusoids, reset on landing. */
+	UPROPERTY(BlueprintReadWrite, Category = WeaponBob)
+		float BobTime;
+
+	/** Rate of weapon bob when standing still. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float WeaponBreathingBobRate;
+	/** Rate of weapon bob when running. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float WeaponRunningBobRate;
+
+	/** How fast to interpolate to Jump/Land bob offset. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float WeaponJumpBobInterpRate;
+
+	/** How fast to decay out Land bob offset. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float WeaponLandBobDecayRate;
+
+	/** Get Max eye offset land bob deflection at landing velocity Z of FullEyeOffsetLandBobVelZ+EyeOffsetLandBobThreshold */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float WeaponDirChangeDeflection;
+
+	/** Current Eye position offset from base view position - interpolates toward TargetEyeOffset. */
+	UPROPERTY(BlueprintReadWrite, Category = WeaponBob)
+		FVector EyeOffset;
+
+	/** Eyeoffset due to crouching transition (not scaled). */
+	UPROPERTY(BlueprintReadWrite, Category = WeaponBob)
+		FVector CrouchEyeOffset;
+
+	/** Target Eye position offset from base view position. */
+	UPROPERTY(BlueprintReadWrite, Category = WeaponBob)
+		FVector TargetEyeOffset;
+
+	/** How fast EyeOffset interpolates to TargetEyeOffset. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		FVector EyeOffsetInterpRate;
+
+	/** How fast CrouchEyeOffset interpolates to 0. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float CrouchEyeOffsetInterpRate;
+
+	/** How fast TargetEyeOffset decays. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		FVector EyeOffsetDecayRate;
+
+	/** Jump target view bob magnitude. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float EyeOffsetJumpBob;
+
+	/** Jump Landing target view bob magnitude. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float EyeOffsetLandBob;
+
+	/** Jump Landing target view bob Velocity threshold. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float EyeOffsetLandBobThreshold;
+
+	/** Jump Landing target weapon bob Velocity threshold. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float WeaponLandBobThreshold;
+
+	/** Get Max weapon land bob deflection at landing velocity Z of FullWeaponLandBobVelZ+WeaponLandBobThreshold */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float FullWeaponLandBobVelZ;
+
+	/** Get Max eye offset land bob deflection at landing velocity Z of FullEyeOffsetLandBobVelZ+EyeOffsetLandBobThreshold */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WeaponBob)
+		float FullEyeOffsetLandBobVelZ;
+
+	/** Get Max weapon land bob deflection at landing velocity Z of FullWeaponLandBobVelZ+WeaponLandBobThreshold */
+	//Already defined
+	//UPROPERTY()
+	//float DefaultBaseEyeHeight;
+
+	/** maximum amount of time Pawn stays around when dead even if visible (may be cleaned up earlier if not visible) */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = Death)
+		float MaxDeathLifeSpan;
+	/** GetWorld()->TimeSeconds when PlayDying() was called */
+	UPROPERTY(BlueprintReadOnly, Category = Death)
+		float TimeOfDeath;
+
+	/** Broadcast when the pawn has died [Server only] */
+	//Unrecognized type. Presumably in one of the UT include files.
+	//UPROPERTY(BlueprintAssignable)
+	//FCharacterDiedSignature OnDied;
+
+	/** Max distance for enemy player indicator */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HUD)
+		float PlayerIndicatorMaxDistance;
+
+	/** Max distance for same team player indicator */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HUD)
+		float TeamPlayerIndicatorMaxDistance;
+
+	/** Mark this pawn as belonging to the player with the highest score, intended for cosmetic usage only */
+	UPROPERTY(ReplicatedUsing = OnRep_HasHighScore, BlueprintReadOnly, Category = Pawn)
+		bool bHasHighScore;
+
+	UFUNCTION()
+		void OnRep_HasHighScore();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void HasHighScoreChanged();
+
+	//Dependant on UTCharacterMovement
+	//virtual void RecalculateBaseEyeHeight() override;
+
+	/** Returns offset to add to first person mesh for weapon bob. */
+	//Depndeant on UTCharacterMovement
+	//virtual FVector GetWeaponBobOffset(float DeltaTime, AUTWeapon* MyWeapon);
+
+	/** Returns eyeoffset transformed into current view */
+	virtual FVector GetTransformedEyeOffset() const;
+
+	//Dependant on UTPlayerController
+	//virtual FVector GetPawnViewLocation() const override;
+
+	//Dependant on UTPlayerController
+	//virtual void CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult) override;
+
+	//Dependant on UTCharacterMovement
+	//virtual void OnEndCrouch(float HeightAdjust, float ScaledHeightAdjust) override;
+
+	//Dependant on UTCharacterMovement
+	//virtual void OnStartCrouch(float HeightAdjust, float ScaledHeightAdjust) override;
+
+	virtual void Crouch(bool bClientSimulation = false) override;
+
+	//Dependant on UTReplicatedEmitter
+	//virtual bool TeleportTo(const FVector& DestLocation, const FRotator& DestRotation, bool bIsATest = false, bool bNoCheck = false) override;
+	//UFUNCTION()
+	//Dependant on UUTDmgType_BlockedTelefrag
+	//virtual void OnOverlapBegin(AActor* OtherActor);
+
+	//Dependant on IsDead()
+	//UFUNCTION()
+	//virtual void OnRagdollCollision(AActor* OtherActor, UPrimitiveComponent* HitComponent, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	UPROPERTY(BlueprintReadOnly, Category = Pawn)
+		bool bInRagdollRecovery;
+
+	/** last time ragdolling corpse spawned a blood decal */
+	UPROPERTY(BlueprintReadWrite, Category = Effects)
+		float LastDeathDecalTime;
+
+	/** Landing at faster than this velocity results in damage (note: use positive number) */
+	UPROPERTY(Category = "Falling Damage", EditAnywhere, BlueprintReadWrite)
+		float MaxSafeFallSpeed;
+
+	//Dependant on UTWorldSettings
+	//UFUNCTION(BlueprintCallable, Category = Pawn)
+	//bool IsDead();
 
 
+	/** returns true if any local PlayerController is viewing this Pawn */
+	bool IsLocallyViewed()
+	{
+		for (FLocalPlayerIterator It(GEngine, GetWorld()); It; ++It)
+		{
+			if (It->PlayerController != NULL && It->PlayerController->GetViewTarget() == this)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
+	virtual FVector GetNavAgentLocation() const override
+	{
+		// push down a little to make sure we intersect with the navmesh but not so much that we get stuff on a lower level that requires a jump
+		return GetActorLocation() - FVector(0.f, 0.f, FMath::Max<float>(25.0f, GetCharacterMovement()->MaxStepHeight));
+	}
 
+protected:
+	/** reduces acceleration and friction while walking; generally applied temporarily by some weapons
+	* (1.0 == no acceleration or friction, 0.0 == unrestricted movement)
+	*/
+	UPROPERTY(BlueprintReadOnly, Replicated, Category = Movement)
+		float WalkMovementReductionPct;
+	/** time remaining until WalkMovementReductionPct is reset to zero */
+	UPROPERTY(BlueprintReadOnly, Replicated, Category = Movement)
+		float WalkMovementReductionTime;
+
+public:
+	inline float GetWalkMovementReductionPct()
+	{
+		return WalkMovementReductionPct;
+	}
+	/** sets walking movement reduction */
+	//UFUNCTION(BlueprintCallable, Category = Movement);
+	//Dependant on UTCharacterMovement
+	//virtual void SetWalkMovementReduction(float InPct, float InDuration);
+
+protected:
+	/** destroys dead character if no longer onscreen */
+	UFUNCTION()
+		void DeathCleanupTimer();
+
+	//Dependant on UTCharacterMovement
+	//UFUNCTION(BlueprintNativeEvent, Category = "Pawn|Character|InternalEvents", meta = (FriendlyName = "CanDodge"))
+	//bool CanDodgeInternal() const;
+
+	/** hook to modify damage CAUSED by this Pawn - note that EventInstigator may not be equal to Controller if we're in a vehicle, etc */
+	UFUNCTION(BlueprintNativeEvent)
+	void ModifyDamageCaused(int32& Damage, FVector& Momentum, const FDamageEvent& DamageEvent, AActor* Victim, AController* EventInstigator, AActor* DamageCauser);
+
+private:
+	void ApplyDamageMomentum(float DamageTaken, FDamageEvent const& DamageEvent, APawn* PawnInstigator, AActor* DamageCauser);
+
+public:
+	/** set by path following to last MoveTarget that was successfully reached; used to avoid pathing getting confused about its current position on the navigation graph when it is on two nodes/polys simultaneously */
+	//UPROPERTY()
+	//FRouteCacheItemundefined
+	//FRouteCacheItem LastReachedMoveTarget;
 };
 
-
-
+/*No idea what btearoff or pendingkillpending is.
+inline bool AIntegratedCharacterNoAI::IsDead()
+{
+	return bTearOff || bPendingKillPending;
+}*/

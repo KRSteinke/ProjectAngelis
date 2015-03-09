@@ -368,7 +368,7 @@ void AIntegratedCharacterNoAI::StatusAmbientSoundUpdated()
 	}
 }
 
-void AUTCharacter::SetBodyColorFlash(const UCurveLinearColor* ColorCurve, bool bRimOnly)
+void AIntegratedCharacterNoAI::SetBodyColorFlash(const UCurveLinearColor* ColorCurve, bool bRimOnly)
 {
 	BodyColorFlashCurve = ColorCurve;
 	BodyColorFlashElapsedTime = 0.0f;
@@ -377,4 +377,70 @@ void AUTCharacter::SetBodyColorFlash(const UCurveLinearColor* ColorCurve, bool b
 		static FName NAME_FullBodyFlashPct(TEXT("FullBodyFlashPct"));
 		BodyMI->SetScalarParameterValue(NAME_FullBodyFlashPct, bRimOnly ? 0.0f : 1.0f);
 	}
+}
+
+void AIntegratedCharacterNoAI::UpdateBodyColorFlash(float DeltaTime)
+{
+	static FName NAME_HitFlashColor(TEXT("HitFlashColor"));
+
+	BodyColorFlashElapsedTime += DeltaTime;
+	float MinTime, MaxTime;
+	BodyColorFlashCurve->GetTimeRange(MinTime, MaxTime);
+	if (BodyColorFlashElapsedTime > MaxTime)
+	{
+		BodyColorFlashCurve = NULL;
+		BodyMI->SetVectorParameterValue(NAME_HitFlashColor, FLinearColor(0.0f, 0.0f, 0.0f, 0.0f));
+	}
+	else
+	{
+		BodyMI->SetVectorParameterValue(NAME_HitFlashColor, BodyColorFlashCurve->GetLinearColorValue(BodyColorFlashElapsedTime));
+	}
+}
+
+void AIntegratedCharacterNoAI::OnRep_HasHighScore()
+{
+	HasHighScoreChanged();
+}
+
+FVector AIntegratedCharacterNoAI::GetTransformedEyeOffset() const
+{
+	FRotationMatrix ViewRotMatrix = FRotationMatrix(GetViewRotation());
+	FVector XTransform = ViewRotMatrix.GetScaledAxis(EAxis::X) * EyeOffset.X;
+	if ((XTransform.Z > KINDA_SMALL_NUMBER) && (XTransform.Z + EyeOffset.Z + BaseEyeHeight + CrouchEyeOffset.Z > GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight() - 12.f))
+	{
+		float MaxZ = FMath::Max(0.f, GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight() - 12.f - EyeOffset.Z - BaseEyeHeight - CrouchEyeOffset.Z);
+		XTransform = XTransform * MaxZ / XTransform.Z;
+	}
+	return XTransform + ViewRotMatrix.GetScaledAxis(EAxis::Y) * EyeOffset.Y + FVector(0.f, 0.f, EyeOffset.Z);;
+}
+
+void AIntegratedCharacterNoAI::Crouch(bool bClientSimulation)
+{
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->bWantsToCrouch = true;
+	}
+}
+
+void AIntegratedCharacterNoAI::DeathCleanupTimer()
+{
+	if (!IsLocallyViewed() && (bHidden || GetWorld()->TimeSeconds - GetLastRenderTime() > 0.5f || GetWorld()->TimeSeconds - TimeOfDeath > MaxDeathLifeSpan))
+	{
+		Destroy();
+	}
+	else
+	{
+		GetWorldTimerManager().SetTimer(this, &AIntegratedCharacterNoAI::DeathCleanupTimer, 0.5f, false);
+	}
+}
+
+void AIntegratedCharacterNoAI::ModifyDamageCaused_Implementation(int32& Damage, FVector& Momentum, const FDamageEvent& DamageEvent, AActor* Victim, AController* EventInstigator, AActor* DamageCauser)
+{
+	Damage *= DamageScaling;
+}
+
+void AIntegratedCharacterNoAI::ApplyDamageMomentum(float DamageTaken, FDamageEvent const& DamageEvent, APawn* PawnInstigator, AActor* DamageCauser)
+{
+	//UE_LOG(UT, Warning, TEXT("Use TakeDamage() instead"));
+	checkSlow(false);
 }
