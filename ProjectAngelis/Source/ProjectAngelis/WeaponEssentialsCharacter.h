@@ -91,12 +91,12 @@ protected:
 	
 	void SetupPlayerInputComponent(class UInputComponent* InputComponent);
 
-	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);	
-
-	
+	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);		
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	TSubobjectPtr<class UBoxComponent> CollisionComp;
+
+	void Sprint();
 
 public:
 

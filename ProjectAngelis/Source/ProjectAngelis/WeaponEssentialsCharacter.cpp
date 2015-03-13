@@ -70,6 +70,7 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 		InputComponent->BindAction("Fire", IE_Pressed, this, &AWeaponEssentialsCharacter::FireWeapon);
 		InputComponent->BindAction("NextWeapon", IE_Pressed, this, &AWeaponEssentialsCharacter::NextWeapon);
 		InputComponent->BindAction("PrevWeapon", IE_Pressed, this, &AWeaponEssentialsCharacter::PrevWeapon);
+
 		/*InputComponent->BindAction("Pistol", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipPistol);
 		InputComponent->BindAction("Shotgun", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipShotgun);
 		InputComponent->BindAction("RocketLauncher", IE_Pressed, this, &AWeaponEssentialsCharacter::EquipRocketLauncher);*/
@@ -141,6 +142,7 @@ CurrentWeapon = Spawner;
 		//calculate delta for this frame from the rate information
 		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 	}
+
 
 	void AWeaponEssentialsCharacter::MoveForward(float Value)
 	{
@@ -383,9 +385,10 @@ CurrentWeapon = Spawner;
 					Weapon->Destroy();
 				}
 				else{
-					if (Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo > Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo)
+					if (Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo + Weapon->CurrentAmmo >= Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo)
 					{
 						Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo = Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo;
+						Weapon->Destroy();
 					}
 				}
 
