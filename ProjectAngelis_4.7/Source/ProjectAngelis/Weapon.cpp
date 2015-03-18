@@ -3,6 +3,7 @@
 #include "ProjectAngelis.h"
 #include "Weapon.h"
 #include "WeaponEssentialsCharacter.h"
+#include "AngelisCharacter.h"
 #include "Engine.h"
 
 AWeapon::AWeapon(const class FPostConstructInitializeProperties& PCIP)
@@ -37,7 +38,7 @@ void AWeapon::Fire()
 	}
 }
 
-void AWeapon::SetOwningPawn(AWeaponEssentialsCharacter * NewOwner)
+void AWeapon::SetOwningPawn(AAngelisCharacter * NewOwner)
 {
 	if (MyPawn != NewOwner)
 	{
@@ -146,7 +147,7 @@ void AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin,
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
 		Enemy->Destroy();
 	}
-	AWeaponEssentialsCharacter *Character = Cast<AWeaponEssentialsCharacter>(Impact.GetActor());
+	AAngelisCharacter *Character = Cast<AAngelisCharacter>(Impact.GetActor());
 	if (Character)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A CHARACTER!!");

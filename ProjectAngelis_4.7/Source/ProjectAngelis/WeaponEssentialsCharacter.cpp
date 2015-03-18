@@ -112,6 +112,8 @@ CurrentWeapon = Spawner;
 
 	void AWeaponEssentialsCharacter::GiveDefaultWeapon()
 	{
+		
+		/*Band-aid to prevent errors with linking to weapon
 		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(WeaponSpawn);
 		if (Spawner)
 		{
@@ -119,7 +121,7 @@ CurrentWeapon = Spawner;
 			CurrentWeapon = Inventory[Spawner->WeaponConfig.Priority];
 			CurrentWeapon->SetOwningPawn(this);
 			CurrentWeapon->OnEquip();
-		}
+		}*/
 	}
 
 	void AWeaponEssentialsCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
@@ -312,6 +314,7 @@ CurrentWeapon = Spawner;
 
 	void AWeaponEssentialsCharacter::EquipWeapon(AWeapon *Weapon)
 	{
+		/*Band-aid to prevent link errors with weapon
 		if (CurrentWeapon != NULL)
 		{
 			CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
@@ -326,7 +329,7 @@ CurrentWeapon = Spawner;
 			CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 			CurrentWeapon->SetOwningPawn(this);
 			Weapon->OnEquip();
-		}
+		}*/
 	}
 
 	void AWeaponEssentialsCharacter::OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
