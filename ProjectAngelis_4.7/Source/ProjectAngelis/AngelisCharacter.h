@@ -109,7 +109,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Wallet)
 	int32 Wallet;
 
+	UFUNCTION(BlueprintCallable, Category = Wallet)
 	void IncreasePoints(int32 IncreaseValue);
+	UFUNCTION(BlueprintCallable, Category = Wallet)
 	void DecreasePoints(int32 DecreaseValue);
 
 };

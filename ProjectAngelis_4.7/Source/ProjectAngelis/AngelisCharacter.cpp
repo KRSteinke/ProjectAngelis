@@ -285,11 +285,13 @@ void AAngelisCharacter::IncreaseHealth(int32 IncreaseValue){
 
 void AAngelisCharacter::IncreasePoints(int32 IncreaseValue){
 	Wallet += IncreaseValue;
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::FromInt(Wallet));
 }
 
 void AAngelisCharacter::DecreasePoints(int32 DecreaseValue){
 	if (Wallet - DecreaseValue >= 0)
 		Wallet -= DecreaseValue;
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::FromInt(Wallet));
 }
 
 
