@@ -66,7 +66,7 @@ public:
 
 protected:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Inventory)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Inventory)
 	TArray<class AWeapon*> Inventory;
 
 	//Base turn rate, in deg/sec. Other scaling may affect final turn rate
@@ -100,7 +100,7 @@ public:
 	int32 MaxHealth;
 
 	//For now, SET IT TO 3!!!
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = Inventory)
+	UPROPERTY(EditDefaultsOnly, Category = Inventory)
 	int32 InventorySize;
 
 	void IncreaseHealth(int32 IncreaseValue);
