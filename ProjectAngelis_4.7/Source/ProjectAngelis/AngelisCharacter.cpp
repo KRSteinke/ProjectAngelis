@@ -4,9 +4,10 @@
 #include "AngelisCharacter.h"
 #include "Engine.h"
 #include "Engine/Blueprint.h"
+#define COLLISION_PROJECTILE ECC_GameTraceChannel1
 
 // Sets default values
-AAngelisCharacter::AAngelisCharacter(const class FPostConstructInitializeProperties& PCIP)
+AAngelisCharacter::AAngelisCharacter(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -16,6 +17,10 @@ AAngelisCharacter::AAngelisCharacter(const class FPostConstructInitializePropert
 	//FollowCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
 
 	CurrentWeapon = NULL;
+
+	//UsableActor
+	MaxUseDistance = 800;
+	bHasNewFocus = true;
 
 	Inventory.SetNum(3, false);
 
@@ -33,21 +38,21 @@ AAngelisCharacter::AAngelisCharacter(const class FPostConstructInitializePropert
 	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &AAngelisCharacter::OnCollision);
 
 	//Configure character movement
-	CharacterMovement->bOrientRotationToMovement = true;//character moves in the direction of input...
-	CharacterMovement->RotationRate = FRotator(0.0f, 540.f, 0.0f);// ...at this rotation rate
-	CharacterMovement->JumpZVelocity = 600.f;
-	CharacterMovement->AirControl = 0.2f;
+	GetCharacterMovement()->bOrientRotationToMovement = true;//character moves in the direction of input...
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.f, 0.0f);// ...at this rotation rate
+	GetCharacterMovement()->JumpZVelocity = 600.f;
+	GetCharacterMovement()->AirControl = 0.2f;
 
 	//Create a camera boon (pulls in towards the player if there is a collision)
 	CameraBoom = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
 	CameraBoom->TargetArmLength = 300.0f;//The camera follows at this distance behind the character
-	CameraBoom->bUseControllerViewRotation = true;//Rotate the arm based on the controller
+	CameraBoom->bUsePawnControlRotation = true;//Rotate the arm based on the controller
 
 	//Create a follow camera
 	FollowCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
 	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName);//Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
-	FollowCamera->bUseControllerViewRotation = false; //Camera does not rotate relative to arm
+	FollowCamera->bUsePawnControlRotation = false; //Camera does not rotate relative to arm
 
 	//Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character)
 	//are set in the derived blueprint asset named MyCharacter(to avoid direct content references in C++)
@@ -65,7 +70,34 @@ void AAngelisCharacter::BeginPlay()
 void AAngelisCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	if (Controller && Controller->IsLocalController())
+	{
+		AUsableActor* usable = GetUsableInView();
 
+		// End Focus
+		if (FocusedUsableActor != usable)
+		{
+			if (FocusedUsableActor)
+			{
+				FocusedUsableActor->EndFocusItem();
+			}
+
+			bHasNewFocus = true;
+		}
+
+		// Assign new Focus
+		FocusedUsableActor = usable;
+
+		// Start Focus.
+		if (usable)
+		{
+			if (bHasNewFocus)
+			{
+				usable->StartFocusItem();
+				bHasNewFocus = false;
+			}
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -96,6 +128,8 @@ void AAngelisCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 	//handle touch devices
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AAngelisCharacter::TouchStarted);
 
+	//handle UsableActor input
+	InputComponent->BindAction("Use", IE_Pressed, this, &AAngelisCharacter::Use);
 }
 
 void AAngelisCharacter::FireWeapon()
@@ -334,4 +368,58 @@ void AAngelisCharacter::MoveRight(float Value)
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 	}
+}
+
+/*
+	-------------------------------
+	USABLE ACTOR SECTION: START
+	Herein lies the Functions for a Usable Actor Valid Character
+	Functions include: GetUsableInView() to find closest looked-at UsableActor
+					   Tick(float DeltaSeconds) to override clock Tick function (SEE ABOVE FUNCTION, edited for UsableActor)
+					   Use_Implementation() & Use_Validate() to perform OnUsed
+					   & edit to SetupPlayerInputComponent (SEE ABOVE FUNCTION)
+	-------------------------------
+*/
+
+
+AUsableActor* AAngelisCharacter::GetUsableInView()
+{
+	FVector camLoc;
+	FRotator camRot;
+
+	if (Controller == NULL)
+		return NULL;
+
+	Controller->GetPlayerViewPoint(camLoc, camRot);
+	const FVector start_trace = camLoc;
+	const FVector direction = camRot.Vector();
+	const FVector end_trace = start_trace + (direction * MaxUseDistance);
+
+	FCollisionQueryParams TraceParams(FName(TEXT("")), true, this);
+	TraceParams.bTraceAsyncScene = true;
+	TraceParams.bReturnPhysicalMaterial = false;
+	TraceParams.bTraceComplex = true;
+
+	FHitResult Hit(ForceInit);
+	GetWorld()->LineTraceSingle(Hit, start_trace, end_trace, COLLISION_PROJECTILE, TraceParams);
+
+	return Cast<AUsableActor>(Hit.GetActor());
+}
+
+/*
+Runs on Server. Perform "OnUsed" on currently viewed UsableActor if implemented.
+*/
+void AAngelisCharacter::Use_Implementation()
+{
+	AUsableActor* usable = GetUsableInView();
+	if (usable)
+	{
+		usable->OnUsed(this);
+	}
+}
+
+bool AAngelisCharacter::Use_Validate()
+{
+	// No special server-side validation performed.
+	return true;
 }

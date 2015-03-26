@@ -14,7 +14,7 @@ class PROJECTANGELIS_API AShotgun : public AWeapon
 
 	GENERATED_BODY()
 
-	AShotgun(const class FPostConstructInitializeProperties& PCIP);
+	AShotgun(const class FObjectInitializer& PCIP);
 	
 	
 	

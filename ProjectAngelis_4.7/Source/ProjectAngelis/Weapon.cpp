@@ -6,7 +6,7 @@
 #include "AngelisCharacter.h"
 #include "Engine.h"
 
-AWeapon::AWeapon(const class FPostConstructInitializeProperties& PCIP)
+AWeapon::AWeapon(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	CollisionComp = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("CollisionComp"));
