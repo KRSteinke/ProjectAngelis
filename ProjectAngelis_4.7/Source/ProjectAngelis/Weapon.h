@@ -7,7 +7,7 @@
 #include "Enemy.h"
 #include "Weapon.generated.h"
 
-class AWeaponEssentialsCharacter;
+class AAngelisCharacter;
 
 #define TRACE_WEAPON ECC_GameTraceChannel1
 
@@ -79,7 +79,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 	int32 CurrentClip;
 
-	AWeapon(const class FPostConstructInitializeProperties& PCIP);	
+	AWeapon(const class FObjectInitializer& PCIP);	
 
 	UFUNCTION()
 	void Instant_Fire();
@@ -88,10 +88,10 @@ public:
 	TEnumAsByte<EWeaponProjectile::ProjectileType> ProjectileType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
-	TSubobjectPtr<class UBoxComponent> CollisionComp;
+	class UBoxComponent* CollisionComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Config)
-	TSubobjectPtr<USkeletalMeshComponent> WeaponMesh;
+	USkeletalMeshComponent* WeaponMesh;
 
 	UFUNCTION()
 	void Fire();
@@ -108,7 +108,7 @@ public:
 	void OnEquip();
 	void OnUnEquip();
 
-	void SetOwningPawn(AWeaponEssentialsCharacter *NewOwner);
+	void SetOwningPawn(AAngelisCharacter *NewOwner);
 
 	void ReloadAmmo();
 
@@ -117,7 +117,7 @@ protected:
 
 	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
 
-	AWeaponEssentialsCharacter *MyPawn;
+	AAngelisCharacter *MyPawn;
 
 };
 

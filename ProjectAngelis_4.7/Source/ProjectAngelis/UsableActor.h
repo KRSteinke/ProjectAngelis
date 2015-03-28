@@ -6,7 +6,7 @@
 #include "UsableActor.generated.h"
 
 UCLASS()
-class PROJECTANGELIS_API AUsableActor : public AActor
+class PROJECTANGELIS_API AUsableActor : public AStaticMeshActor
 {
 	GENERATED_UCLASS_BODY()
 	

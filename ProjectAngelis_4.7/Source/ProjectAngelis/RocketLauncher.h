@@ -14,7 +14,7 @@ class PROJECTANGELIS_API ARocketLauncher : public AWeapon
 
 	GENERATED_BODY()
 
-	ARocketLauncher(const class FPostConstructInitializeProperties& PCIP);
+	ARocketLauncher(const class FObjectInitializer& PCIP);
 	
 	virtual void ProjectileFire() override;
 	

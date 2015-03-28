@@ -5,7 +5,7 @@
 
 
 // Sets default values
-AUsableActor::AUsableActor(const class FPostConstructInitializeProperties& PCIP)
+AUsableActor::AUsableActor(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 

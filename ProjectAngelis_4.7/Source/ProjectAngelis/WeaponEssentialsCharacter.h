@@ -18,7 +18,7 @@ class PROJECTANGELIS_API AWeaponEssentialsCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	AWeaponEssentialsCharacter(const class FPostConstructInitializeProperties& PCIP);
+	AWeaponEssentialsCharacter(const class FObjectInitializer& PCIP);
 
 	UFUNCTION()
 	void FireWeapon();
@@ -70,11 +70,11 @@ protected:
 
 	//Follow Camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TSubobjectPtr<class UCameraComponent> FollowCamera;
+	class UCameraComponent* FollowCamera;
 
 	//Camera Boom Positioning the Camera Behind the Character
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TSubobjectPtr<class USpringArmComponent> CameraBoom;
+	class USpringArmComponent* CameraBoom;
 
 	//Called for forwards/backwards input
 	void MoveForward(float Value);
@@ -94,7 +94,7 @@ protected:
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);		
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
-	TSubobjectPtr<class UBoxComponent> CollisionComp;
+	class UBoxComponent* CollisionComp;
 
 	void Sprint();
 

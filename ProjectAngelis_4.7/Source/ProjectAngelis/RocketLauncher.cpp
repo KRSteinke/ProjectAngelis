@@ -3,7 +3,7 @@
 #include "ProjectAngelis.h"
 #include "RocketLauncher.h"
 
-ARocketLauncher::ARocketLauncher(const class FPostConstructInitializeProperties& PCIP)
+ARocketLauncher::ARocketLauncher(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 

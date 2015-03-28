@@ -7,7 +7,7 @@
 
 
 
-AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstructInitializeProperties& PCIP)
+AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	/*static ConstructorHelpers::FObjectFinder<UBlueprint> WeaponBlueprint(TEXT("Blueprint'/Game/Blueprints/Weapon/Weapon.Weapon'"));
@@ -24,7 +24,7 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 	Inventory.SetNum(3, false);
 
 	//Set size for collision capsule
-	CapsuleComponent->InitCapsuleSize(42.f, 96.0f);
+	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
 	//Set our turn rates for input
 	BaseTurnRate = 45.f;
@@ -40,21 +40,21 @@ AWeaponEssentialsCharacter::AWeaponEssentialsCharacter(const class FPostConstruc
 	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &AWeaponEssentialsCharacter::OnCollision);
 
 	//Configure character movement
-	CharacterMovement->bOrientRotationToMovement = true;//character moves in the direction of input...
-	CharacterMovement->RotationRate = FRotator(0.0f, 540.f, 0.0f);// ...at this rotation rate
-	CharacterMovement->JumpZVelocity = 600.f;
-	CharacterMovement->AirControl = 0.2f;
+	GetCharacterMovement()->bOrientRotationToMovement = true;//character moves in the direction of input...
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.f, 0.0f);// ...at this rotation rate
+	GetCharacterMovement()->JumpZVelocity = 600.f;
+	GetCharacterMovement()->AirControl = 0.2f;
 
 	//Create a camera boon (pulls in towards the player if there is a collision)
 	CameraBoom = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
 	CameraBoom->TargetArmLength = 300.0f;//The camera follows at this distance behind the character
-	CameraBoom->bUseControllerViewRotation = true;//Rotate the arm based on the controller
+	CameraBoom->bUsePawnControlRotation = true;//Rotate the arm based on the controller
 
 	//Create a follow camera
 	FollowCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
 	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName);//Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
-	FollowCamera->bUseControllerViewRotation = false; //Camera does not rotate relative to arm
+	FollowCamera->bUsePawnControlRotation = false; //Camera does not rotate relative to arm
 
 	//Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character)
 	//are set in the derived blueprint asset named MyCharacter(to avoid direct content references in C++)
@@ -112,6 +112,8 @@ CurrentWeapon = Spawner;
 
 	void AWeaponEssentialsCharacter::GiveDefaultWeapon()
 	{
+		
+		/*Band-aid to prevent errors with linking to weapon
 		AWeapon *Spawner = GetWorld()->SpawnActor<AWeapon>(WeaponSpawn);
 		if (Spawner)
 		{
@@ -119,7 +121,7 @@ CurrentWeapon = Spawner;
 			CurrentWeapon = Inventory[Spawner->WeaponConfig.Priority];
 			CurrentWeapon->SetOwningPawn(this);
 			CurrentWeapon->OnEquip();
-		}
+		}*/
 	}
 
 	void AWeaponEssentialsCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
@@ -312,6 +314,7 @@ CurrentWeapon = Spawner;
 
 	void AWeaponEssentialsCharacter::EquipWeapon(AWeapon *Weapon)
 	{
+		/*Band-aid to prevent link errors with weapon
 		if (CurrentWeapon != NULL)
 		{
 			CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
@@ -326,7 +329,7 @@ CurrentWeapon = Spawner;
 			CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 			CurrentWeapon->SetOwningPawn(this);
 			Weapon->OnEquip();
-		}
+		}*/
 	}
 
 	void AWeaponEssentialsCharacter::OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)

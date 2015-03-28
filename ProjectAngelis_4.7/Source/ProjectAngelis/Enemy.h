@@ -16,6 +16,6 @@ class PROJECTANGELIS_API AEnemy : public AActor
 	//AEnemy(const class FPostConstructInitializeProperties& PCIP);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
-	TSubobjectPtr<UStaticMeshComponent> Mesh;	
+	UStaticMeshComponent* Mesh;	
 	
 };
