@@ -106,6 +106,8 @@ public:
 	void IncreaseHealth(int32 IncreaseValue);
 	void DecreaseHealth(int32 DecreaseValue);
 
+
+
 	UPROPERTY(EditDefaultsOnly, Category = Wallet)
 	int32 Wallet;
 

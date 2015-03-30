@@ -297,8 +297,9 @@ void AAngelisCharacter::DecreasePoints(int32 DecreaseValue){
 
 void AAngelisCharacter::Die()
 {
-	this->Destroy();
-	this->CurrentWeapon->Destroy();
+	if (CurrentWeapon != NULL)
+		this->CurrentWeapon->Destroy();
+	this->Destroy();	
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "Die");
 }
 
