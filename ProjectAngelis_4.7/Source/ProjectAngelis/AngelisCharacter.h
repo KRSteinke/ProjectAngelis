@@ -7,14 +7,16 @@
 #include "Pistol.h"
 #include "Shotgun.h"
 #include "RocketLauncher.h"
+#include "UsableActor.h"
 #include "AngelisCharacter.generated.h"
+
 
 UCLASS(config = game)
 class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	AAngelisCharacter(const class FPostConstructInitializeProperties& PCIP);
+	AAngelisCharacter(const class FObjectInitializer& PCIP);
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void FireWeapon();
@@ -64,6 +66,7 @@ public:
 
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Inventory)
@@ -79,15 +82,24 @@ protected:
 
 	//Follow Camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
-	TSubobjectPtr<class UCameraComponent> FollowCamera;
+	UCameraComponent* FollowCamera;
 
 	//Camera Boom Positioning the Camera Behind the Character
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
-	TSubobjectPtr<class USpringArmComponent> CameraBoom;
+	USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Collision)
-	TSubobjectPtr<class UBoxComponent> CollisionComp;
+	UBoxComponent* CollisionComp;
 
+	/* Max distance to use/focus on actors. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		float MaxUseDistance;
+
+	/** Get actor derived from UsableActor currently looked at by the player */
+	class AUsableActor* GetUsableInView();
+
+	bool bHasNewFocus;
+	AUsableActor* FocusedUsableActor;
 
 	
 
@@ -116,4 +128,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Wallet)
 	void DecreasePoints(int32 DecreaseValue);
 
+	UFUNCTION(BlueprintCallable, WithValidation, Server, Reliable, Category = PlayerAbility)
+		virtual void Use();
+	virtual void Use_Implementation();
+	virtual bool Use_Validate();
 };

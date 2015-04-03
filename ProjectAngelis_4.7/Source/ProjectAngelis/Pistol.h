@@ -14,7 +14,7 @@ class PROJECTANGELIS_API APistol : public AWeapon
 	
 	GENERATED_BODY()
 
-	APistol(const class FPostConstructInitializeProperties& PCIP);
+	APistol(const class FObjectInitializer& PCIP);
 
 	
 	

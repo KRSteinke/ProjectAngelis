@@ -79,7 +79,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 	int32 CurrentClip;
 
-	AWeapon(const class FPostConstructInitializeProperties& PCIP);	
+	AWeapon(const class FObjectInitializer& PCIP);	
 
 	UFUNCTION()
 	void Instant_Fire();
@@ -88,10 +88,10 @@ public:
 	TEnumAsByte<EWeaponProjectile::ProjectileType> ProjectileType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
-	TSubobjectPtr<class UBoxComponent> CollisionComp;
+	class UBoxComponent* CollisionComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Config)
-	TSubobjectPtr<USkeletalMeshComponent> WeaponMesh;
+	USkeletalMeshComponent* WeaponMesh;
 
 	UFUNCTION()
 	void Fire();

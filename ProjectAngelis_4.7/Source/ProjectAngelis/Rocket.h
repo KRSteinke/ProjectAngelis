@@ -19,7 +19,7 @@ class PROJECTANGELIS_API ARocket : public AActor
 	ARocket(const class FPostConstructInitializeProject& PCIP);
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
-	TSubobjectPtr<USphereComponent> CollisionComp;
+	USphereComponent* CollisionComp;
 
 	UFUNCTION()
 	void OnCollision(AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
@@ -29,6 +29,6 @@ class PROJECTANGELIS_API ARocket : public AActor
 public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
-	TSubobjectPtr<class UProjectileMovementComponent>ProjectileMovement;
+	class UProjectileMovementComponent* ProjectileMovement;
 	
 };
