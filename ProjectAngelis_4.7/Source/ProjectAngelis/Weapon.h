@@ -15,7 +15,39 @@ class AAngelisCharacter;
 *
 */
 
+/** Structure that defines the number of enemies per wave*/
+USTRUCT(BlueprintType)
+struct FEnemySpawnNumber : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
 
+public:
+
+	FEnemySpawnNumber()
+		: LightEnemies(0)
+		, MediumEnemies(0)
+		, HeavyEnemies(0)
+		, TotalEnemies(0)
+		, MinPoints(0)
+	{}
+
+	/** The 'Name' column is the same as the Wave Level */
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnNumber)
+		int32 LightEnemies;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnNumber)
+		int32 MediumEnemies;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnNumber)
+		int32 HeavyEnemies;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnNumber)
+		int32 TotalEnemies;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnNumber)
+		int32 MinPoints;
+};
 
 UENUM(BlueprintType)
 namespace EWeaponProjectile
