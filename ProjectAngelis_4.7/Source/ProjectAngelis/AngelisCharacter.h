@@ -24,7 +24,7 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
 	TSubclassOf<class AWeapon> WeaponSpawn;
 
-	AWeapon *CurrentWeapon;
+	
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
@@ -33,10 +33,15 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 	void NextWeapon();
 	void PrevWeapon();
-	void EquipWeapon(AWeapon *Weapon);
+
+	
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void GiveDefaultWeapon();
 
 	void Die();
+
+	AWeapon *CurrentWeapon;
 
 public:
 	// Sets default values for this character's properties
@@ -66,8 +71,14 @@ public:
 
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void EquipWeapon(AWeapon *Weapon);
+
+	
 
 protected:
+
+	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Inventory)
 	TArray<class AWeapon*> Inventory;
