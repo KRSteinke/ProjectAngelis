@@ -31,7 +31,8 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 	void ProcessWeaponPickup(AWeapon *Weapon);
 
-	void NextWeapon();
+	
+
 	void PrevWeapon();
 	void EquipWeapon(AWeapon *Weapon);
 	void GiveDefaultWeapon();
@@ -39,6 +40,10 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	void Die();
 
 public:
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void NextWeapon();
+
 	// Sets default values for this character's properties
 	AAngelisCharacter();
 

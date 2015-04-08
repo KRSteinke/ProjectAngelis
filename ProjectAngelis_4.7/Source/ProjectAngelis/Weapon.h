@@ -140,6 +140,7 @@ public:
 	void OnEquip();
 	void OnUnEquip();
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void SetOwningPawn(AAngelisCharacter *NewOwner);
 
 	void ReloadAmmo();
