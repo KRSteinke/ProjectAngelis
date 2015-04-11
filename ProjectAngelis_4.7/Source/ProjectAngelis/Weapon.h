@@ -113,7 +113,7 @@ public:
 
 	AWeapon(const class FObjectInitializer& PCIP);	
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void Instant_Fire();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Config)

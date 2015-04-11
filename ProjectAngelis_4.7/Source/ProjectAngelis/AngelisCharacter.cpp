@@ -59,12 +59,12 @@ AAngelisCharacter::AAngelisCharacter(const class FObjectInitializer& PCIP)
 }
 
 // Called when the game starts or when spawned
-void AAngelisCharacter::BeginPlay()
+/*void AAngelisCharacter::BeginPlay()
 {
 	
 	GiveDefaultWeapon();
 	
-}
+}*/
 
 // Called every frame
 void AAngelisCharacter::Tick( float DeltaTime )

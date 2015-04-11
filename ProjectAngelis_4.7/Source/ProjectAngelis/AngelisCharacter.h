@@ -31,7 +31,7 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 	void ProcessWeaponPickup(AWeapon *Weapon);
 
-	void NextWeapon();
+	
 	void PrevWeapon();
 
 	
@@ -41,14 +41,19 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 	void Die();
 
+	UPROPERTY(EditDefaultsOnly, Category = Weapon)
 	AWeapon *CurrentWeapon;
 
 public:
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void NextWeapon();
+
 	// Sets default values for this character's properties
 	AAngelisCharacter();
 
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	//virtual void BeginPlay() override;
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
