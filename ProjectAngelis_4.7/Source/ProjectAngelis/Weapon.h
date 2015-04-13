@@ -131,7 +131,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Config)
 	FWeaponData WeaponConfig;
 		
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	virtual void ProjectileFire();	
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
