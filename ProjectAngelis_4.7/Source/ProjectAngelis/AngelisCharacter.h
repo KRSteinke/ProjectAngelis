@@ -52,7 +52,7 @@ public:
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
-
+	/*
 	//Called for forwards/backwards input
 	void MoveForward(float Value);
 
@@ -65,7 +65,7 @@ public:
 
 	//Called via input to turn look up/down at a given rate.
 	void LookUpAtRate(float Rate);
-
+	*/
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
@@ -85,7 +85,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Camera)
 	float BaseLookUpRate;
 
-	//Follow Camera
+/*	//Follow Camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
 	UCameraComponent* FollowCamera;
 
@@ -95,7 +95,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Collision)
 	UBoxComponent* CollisionComp;
-
+*/
 	/* Max distance to use/focus on actors. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		float MaxUseDistance;

@@ -27,16 +27,16 @@ AAngelisCharacter::AAngelisCharacter(const class FObjectInitializer& PCIP)
 	//Set our turn rates for input
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
-
+	/*
 	//Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
-	bUseControllerRotationRoll = false;
+	bUseControllerRotationRoll = false;*/
 
 	CollisionComp = PCIP.CreateDefaultSubobject<UBoxComponent>(this, "CollisionComp");
 	CollisionComp->AttachTo(RootComponent);
 	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &AAngelisCharacter::OnCollision);
-
+	/*
 	//Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true;//character moves in the direction of input...
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.f, 0.0f);// ...at this rotation rate
@@ -53,7 +53,7 @@ AAngelisCharacter::AAngelisCharacter(const class FObjectInitializer& PCIP)
 	FollowCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
 	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName);//Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; //Camera does not rotate relative to arm
-
+	*/
 	//Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character)
 	//are set in the derived blueprint asset named MyCharacter(to avoid direct content references in C++)
 }
@@ -99,20 +99,20 @@ void AAngelisCharacter::Tick( float DeltaTime )
 		}
 	}
 }
-
+/*
 // Called to bind functionality to input
 void AAngelisCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	//Set up gameplay key bindings
 	check(InputComponent);
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+
 	InputComponent->BindAction("Fire", IE_Pressed, this, &AAngelisCharacter::FireWeapon);
 	InputComponent->BindAction("NextWeapon", IE_Pressed, this, &AAngelisCharacter::NextWeapon);
 	InputComponent->BindAction("PrevWeapon", IE_Pressed, this, &AAngelisCharacter::PrevWeapon);
 
-	/*InputComponent->BindAction("Pistol", IE_Pressed, this, &AAngelisCharacter::EquipPistol);
-	InputComponent->BindAction("Shotgun", IE_Pressed, this, &AAngelisCharacter::EquipShotgun);
-	InputComponent->BindAction("RocketLauncher", IE_Pressed, this, &AAngelisCharacter::EquipRocketLauncher);*/
+	//InputComponent->BindAction("Pistol", IE_Pressed, this, &AAngelisCharacter::EquipPistol);
+	//InputComponent->BindAction("Shotgun", IE_Pressed, this, &AAngelisCharacter::EquipShotgun);
+	//InputComponent->BindAction("RocketLauncher", IE_Pressed, this, &AAngelisCharacter::EquipRocketLauncher);
 
 	InputComponent->BindAxis("MoveForward", this, &AAngelisCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AAngelisCharacter::MoveRight);
@@ -130,7 +130,7 @@ void AAngelisCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 
 	//handle UsableActor input
 	InputComponent->BindAction("Use", IE_Pressed, this, &AAngelisCharacter::Use);
-}
+}*/
 
 void AAngelisCharacter::FireWeapon()
 {
@@ -336,7 +336,7 @@ void AAngelisCharacter::Die()
 	this->Destroy();	
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "Die");
 }
-
+/*
 void AAngelisCharacter::TurnAtRate(float Rate)
 {
 	//Calculate delta for this frame from the rate information
@@ -372,7 +372,7 @@ void AAngelisCharacter::MoveRight(float Value)
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 	}
 }
-
+*/
 /*
 	-------------------------------
 	USABLE ACTOR SECTION: START
