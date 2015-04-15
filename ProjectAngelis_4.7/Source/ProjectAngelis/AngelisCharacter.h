@@ -92,10 +92,10 @@ protected:
 	//Camera Boom Positioning the Camera Behind the Character
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
 	USpringArmComponent* CameraBoom;
-
+	*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Collision)
 	UBoxComponent* CollisionComp;
-*/
+
 	/* Max distance to use/focus on actors. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		float MaxUseDistance;
