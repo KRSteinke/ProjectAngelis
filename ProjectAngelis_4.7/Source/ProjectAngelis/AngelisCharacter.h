@@ -67,7 +67,7 @@ public:
 	void LookUpAtRate(float Rate);
 	*/
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	//virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
