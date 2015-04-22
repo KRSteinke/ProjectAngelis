@@ -59,12 +59,12 @@ AAngelisCharacter::AAngelisCharacter(const class FObjectInitializer& PCIP)
 }
 
 // Called when the game starts or when spawned
-void AAngelisCharacter::BeginPlay()
+/*void AAngelisCharacter::BeginPlay()
 {
 	
 	GiveDefaultWeapon();
 	
-}
+}*/
 
 // Called every frame
 void AAngelisCharacter::Tick( float DeltaTime )
@@ -266,7 +266,7 @@ void AAngelisCharacter::PrevWeapon()
 void AAngelisCharacter::EquipWeapon(AWeapon *Weapon)
 {
 	if (CurrentWeapon != NULL)
-	{
+	{		
 		CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 		CurrentWeapon->OnUnEquip();
 		CurrentWeapon = Weapon;
@@ -276,6 +276,8 @@ void AAngelisCharacter::EquipWeapon(AWeapon *Weapon)
 	else
 	{
 		CurrentWeapon = Weapon;
+
+		CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 		CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 		CurrentWeapon->SetOwningPawn(this);
 		Weapon->OnEquip();

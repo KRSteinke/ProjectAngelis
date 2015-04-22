@@ -66,7 +66,11 @@ void AWeapon::AttachToPlayer()
 
 		USkeletalMeshComponent *Character = MyPawn->GetMesh();
 		WeaponMesh->SetHiddenInGame(false);
+<<<<<<< HEAD
 		WeaponMesh->AttachTo(Character, "WeaponPoint");
+=======
+		WeaponMesh->AttachTo(Character, "b_LeftWeaponSocket");
+>>>>>>> 98579277286ed807b126776a48aa9fa5342c7104
 	}
 }
 

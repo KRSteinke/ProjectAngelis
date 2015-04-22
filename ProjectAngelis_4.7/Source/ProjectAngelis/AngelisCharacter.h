@@ -24,7 +24,7 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
 	TSubclassOf<class AWeapon> WeaponSpawn;
 
-	AWeapon *CurrentWeapon;
+	
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
@@ -32,12 +32,21 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	void ProcessWeaponPickup(AWeapon *Weapon);
 
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> 98579277286ed807b126776a48aa9fa5342c7104
 	void PrevWeapon();
-	void EquipWeapon(AWeapon *Weapon);
+
+	
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void GiveDefaultWeapon();
 
 	void Die();
+
+	UPROPERTY(EditDefaultsOnly, Category = Weapon)
+	AWeapon *CurrentWeapon;
 
 public:
 
@@ -48,7 +57,7 @@ public:
 	AAngelisCharacter();
 
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	//virtual void BeginPlay() override;
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
@@ -71,8 +80,14 @@ public:
 
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void EquipWeapon(AWeapon *Weapon);
+
+	
 
 protected:
+
+	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Inventory)
 	TArray<class AWeapon*> Inventory;
