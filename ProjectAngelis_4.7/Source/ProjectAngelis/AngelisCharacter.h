@@ -29,9 +29,10 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void ProcessWeaponPickup(AWeapon *Weapon);
 
-	
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void PrevWeapon();
 
 	
@@ -39,6 +40,7 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void GiveDefaultWeapon();
 
+	UFUNCTION(BlueprintCallable, Category = Health)
 	void Die();
 
 	UPROPERTY(EditDefaultsOnly, Category = Weapon)
@@ -59,23 +61,29 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 	//Called for forwards/backwards input
+	UFUNCTION(BlueprintCallable, Category = Movement)
 	void MoveForward(float Value);
 
 	//Called for side to side input
+	UFUNCTION(BlueprintCallable, Category = Movement)
 	void MoveRight(float Value);
 
 	//Called via input to turn at a given rate
 	//@param Rate this is a normalized rate, i.e. 1.0 means 100% of desired turn rate
+	UFUNCTION(BlueprintCallable, Category = Movement)
 	void TurnAtRate(float Rate);
 
 	//Called via input to turn look up/down at a given rate.
+	UFUNCTION(BlueprintCallable, Category = Movement)
 	void LookUpAtRate(float Rate);
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
+	UFUNCTION(BlueprintCallable, Category = Movement)
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
+	
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void EquipWeapon(AWeapon *Weapon);
 
@@ -131,7 +139,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Inventory)
 	int32 InventorySize;
 
+	UFUNCTION(BlueprintCallable, Category = Health)
 	void IncreaseHealth(int32 IncreaseValue);
+
+	UFUNCTION(BlueprintCallable, Category = Health)
 	void DecreaseHealth(int32 DecreaseValue);
 
 

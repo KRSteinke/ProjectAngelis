@@ -125,7 +125,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Config)
 	USkeletalMeshComponent* WeaponMesh;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void Fire();
 
 	UPROPERTY(EditDefaultsOnly, Category = Config)
@@ -137,11 +137,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class ARocket> ProjectileClass;
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnEquip();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnUnEquip();
 
 	void SetOwningPawn(AAngelisCharacter *NewOwner);
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void ReloadAmmo();
 
 protected:
