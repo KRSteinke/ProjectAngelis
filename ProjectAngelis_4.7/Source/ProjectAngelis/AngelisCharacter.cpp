@@ -59,12 +59,12 @@ AAngelisCharacter::AAngelisCharacter(const class FObjectInitializer& PCIP)
 }
 
 // Called when the game starts or when spawned
-void AAngelisCharacter::BeginPlay()
+/*void AAngelisCharacter::BeginPlay()
 {
 	
 	GiveDefaultWeapon();
 	
-}
+}*/
 
 // Called every frame
 void AAngelisCharacter::Tick( float DeltaTime )
@@ -226,14 +226,13 @@ void AAngelisCharacter::NextWeapon()
 	}
 	else
 	{
-		if (Inventory[0] != NULL)
-			EquipWeapon(Inventory[0]);
-		else if (Inventory[1] != NULL)
-			EquipWeapon(Inventory[1]);
-		else if (Inventory[2] != NULL)
-			EquipWeapon(Inventory[2]);
-		else
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+		for (int32 i = 0; i < InventorySize; i++){
+			if (Inventory[i] != NULL){
+				EquipWeapon(Inventory[i]);
+				return;
+			}
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 	}
 }
 
@@ -252,21 +251,20 @@ void AAngelisCharacter::PrevWeapon()
 	}
 	else
 	{
-		if (Inventory[0] != NULL)
-			EquipWeapon(Inventory[0]);
-		else if (Inventory[1] != NULL)
-			EquipWeapon(Inventory[1]);
-		else if (Inventory[2] != NULL)
-			EquipWeapon(Inventory[2]);
-		else
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+		for (int32 i = (InventorySize - 1); i >= 0; i--){
+			if (Inventory[i] != NULL){
+				EquipWeapon(Inventory[i]);
+				return;
+			}
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 	}
 }
 
 void AAngelisCharacter::EquipWeapon(AWeapon *Weapon)
 {
 	if (CurrentWeapon != NULL)
-	{
+	{		
 		CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 		CurrentWeapon->OnUnEquip();
 		CurrentWeapon = Weapon;
@@ -276,6 +274,8 @@ void AAngelisCharacter::EquipWeapon(AWeapon *Weapon)
 	else
 	{
 		CurrentWeapon = Weapon;
+
+		CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 		CurrentWeapon = Inventory[CurrentWeapon->WeaponConfig.Priority];
 		CurrentWeapon->SetOwningPawn(this);
 		Weapon->OnEquip();
