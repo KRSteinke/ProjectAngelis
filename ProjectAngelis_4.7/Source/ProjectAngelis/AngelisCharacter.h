@@ -35,13 +35,13 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 public:
 
-<<<<<<< HEAD
-	
 
-=======
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> samwave
+=======
+>>>>>>> 4d86000997181506e8500bfc6470d32263c8fe4a
 	void PrevWeapon();
 =======
 		void ProcessWeaponPickup(AWeapon *Weapon);
