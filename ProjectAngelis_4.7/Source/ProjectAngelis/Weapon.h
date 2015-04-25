@@ -108,10 +108,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void DetachFromPlayer();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 	int32 CurrentAmmo;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 	int32 CurrentClip;
 
 	AWeapon(const class FObjectInitializer& PCIP);	
@@ -119,7 +119,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void Instant_Fire();
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Config)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Weapon)
 	TEnumAsByte<EWeaponProjectile::ProjectileType> ProjectileType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
