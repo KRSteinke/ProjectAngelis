@@ -143,14 +143,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnUnEquip();
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void SetOwningPawn(AAngelisCharacter *NewOwner);
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void ReloadAmmo();
 
-protected:
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
 
 	AAngelisCharacter *MyPawn;
