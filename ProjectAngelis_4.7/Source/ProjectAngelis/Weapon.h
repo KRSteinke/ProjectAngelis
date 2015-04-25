@@ -98,12 +98,15 @@ UCLASS()
 class PROJECTANGELIS_API AWeapon : public AActor
 {
 
-	GENERATED_BODY()
-
-	void AttachToPlayer(); 
-	void DetachFromPlayer();
+	GENERATED_BODY()	
 
 public:
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void AttachToPlayer();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void DetachFromPlayer();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 	int32 CurrentAmmo;
