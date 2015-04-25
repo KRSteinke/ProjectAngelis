@@ -144,6 +144,11 @@ void AAngelisCharacter::FireWeapon()
 	}
 }
 
+AWeapon* AAngelisCharacter::GetCurrentWeapon()
+{
+	return CurrentWeapon;
+}
+
 void AAngelisCharacter::OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 

@@ -20,6 +20,9 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 	public:
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	AWeapon* GetCurrentWeapon();
+
 	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
 	TSubclassOf<class AWeapon> WeaponSpawn;
 
@@ -31,20 +34,9 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
 
+
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> samwave
-=======
->>>>>>> 4d86000997181506e8500bfc6470d32263c8fe4a
-	void PrevWeapon();
-=======
-		void ProcessWeaponPickup(AWeapon *Weapon);
->>>>>>> samwave
-=======
-	void ProcessWeaponPickup(AWeapon *Weapon);
->>>>>>> samwave
+	void ProcessWeaponPickup(AWeapon *Weapon);	
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void PrevWeapon();

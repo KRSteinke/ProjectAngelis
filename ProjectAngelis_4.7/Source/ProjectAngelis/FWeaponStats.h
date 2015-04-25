@@ -25,12 +25,14 @@ struct FWeaponStats : public FTableRowBase
 	/** failsafe reload duration if weapon doesn't have any animation for it */
 	UPROPERTY(EditDefaultsOnly, Category=WeaponStat)
 	float NoAnimReloadDuration;
-		
-	FWaveEnemyAISpawnData(){
+	
+	/*FWaveEnemyAISpawnData(){
 		MaxAmmo = 0;
 		AmmoPerClip = 0;
 		InitialClip = 0;
 		TimeBetweenShots = 0.0;
 		NoAnimReloadDuration = 0.0;
-	}
+	}*/
+
 };
+

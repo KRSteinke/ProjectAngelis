@@ -47,12 +47,12 @@ struct FMasterWeaponTable : public FTableRowBase
 	int32 BaseStorePrice;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
-	WeaponModel;
+	//UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	//WeaponModel;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
-	ProjectileModel;
+	//UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	//ProjectileModel;
 	
 	
 	
@@ -67,7 +67,7 @@ struct FMasterWeaponTable : public FTableRowBase
 		DamageType = "placeholder";
 		RateOfFire = 1.0;
 		BaseStorePrice = 0;
-		WeaponModel = ;
-		ProjectileModel = ;
+		//WeaponModel = "placeholder";
+		//ProjectileModel = "placeholder";
 	}
 };
