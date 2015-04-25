@@ -18,8 +18,7 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 	AAngelisCharacter(const class FObjectInitializer& PCIP);
 
-	UFUNCTION(BlueprintCallable, Category = Weapon)
-	void FireWeapon();
+	
 
 	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
 	TSubclassOf<class AWeapon> WeaponSpawn;
@@ -29,24 +28,27 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnCollision(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
-	UFUNCTION(BlueprintCallable, Category = Weapon)
-	void ProcessWeaponPickup(AWeapon *Weapon);
 
-	UFUNCTION(BlueprintCallable, Category = Weapon)
-	void PrevWeapon();
-
-	
-
-	UFUNCTION(BlueprintCallable, Category = Weapon)
-	void GiveDefaultWeapon();
-
-	UFUNCTION(BlueprintCallable, Category = Health)
-	void Die();
 
 	UPROPERTY(EditDefaultsOnly, Category = Weapon)
 	AWeapon *CurrentWeapon;
 
 public:
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		void ProcessWeaponPickup(AWeapon *Weapon);
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		void PrevWeapon();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		void GiveDefaultWeapon();
+
+	UFUNCTION(BlueprintCallable, Category = Health)
+		void Die();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void FireWeapon();
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void NextWeapon();
