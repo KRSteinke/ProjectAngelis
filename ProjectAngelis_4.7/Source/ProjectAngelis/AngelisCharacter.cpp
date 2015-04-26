@@ -234,6 +234,7 @@ void AAngelisCharacter::NextWeapon()
 		for (int32 i = 0; i < InventorySize; i++){
 			if (Inventory[i] != NULL){
 				EquipWeapon(Inventory[i]);
+				//CurrentWeapon = Inventory[i];
 				return;
 			}
 		}
