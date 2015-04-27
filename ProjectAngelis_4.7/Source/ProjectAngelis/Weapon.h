@@ -98,25 +98,28 @@ UCLASS()
 class PROJECTANGELIS_API AWeapon : public AActor
 {
 
-	GENERATED_BODY()
-
-	void AttachToPlayer(); 
-	void DetachFromPlayer();
+	GENERATED_BODY()	
 
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void AttachToPlayer();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	void DetachFromPlayer();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 	int32 CurrentAmmo;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 	int32 CurrentClip;
 
 	AWeapon(const class FObjectInitializer& PCIP);	
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void Instant_Fire();
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Config)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Weapon)
 	TEnumAsByte<EWeaponProjectile::ProjectileType> ProjectileType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
@@ -125,29 +128,34 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Config)
 	USkeletalMeshComponent* WeaponMesh;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void Fire();
 
 	UPROPERTY(EditDefaultsOnly, Category = Config)
 	FWeaponData WeaponConfig;
 		
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	virtual void ProjectileFire();	
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class ARocket> ProjectileClass;
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnEquip();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void OnUnEquip();
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void SetOwningPawn(AAngelisCharacter *NewOwner);
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void ReloadAmmo();
 
-protected:
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
 
 	AAngelisCharacter *MyPawn;
