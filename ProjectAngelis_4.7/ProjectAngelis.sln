@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{661FCBFC-6C65-4905-B1AC-F653C5DF7F5B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{9C869709-7701-43D7-B600-15C472F1267B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{6B9EA3DE-8683-44FF-B949-B7C49380B3E9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{4174669B-143B-4C24-8035-257FB6C0522D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjectAngelis", "Intermediate\ProjectFiles\ProjectAngelis.vcxproj", "{AC97A170-7004-4DFC-B482-8B2DAF23F548}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UE4", "Intermediate\ProjectFiles\UE4.vcxproj", "{BF765963-ACDB-4472-BEB8-4C995421D17B}"
 EndProject
@@ -30,17 +30,12 @@ Global
 		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Development|Windows.Build.0 = Development_Game|x64
 		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Shipping|Windows.ActiveCfg = Shipping_Game|Win32
 		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Shipping|Windows.Build.0 = Shipping_Game|Win32
-		{BF765963-ACDB-4472-BEB8-4C995421D17B}.DebugGame Editor|Windows.ActiveCfg = BuiltWithUnrealBuildTool|Win32
-		{BF765963-ACDB-4472-BEB8-4C995421D17B}.DebugGame|Windows.ActiveCfg = BuiltWithUnrealBuildTool|Win32
-		{BF765963-ACDB-4472-BEB8-4C995421D17B}.Development Editor|Windows.ActiveCfg = BuiltWithUnrealBuildTool|Win32
-		{BF765963-ACDB-4472-BEB8-4C995421D17B}.Development|Windows.ActiveCfg = BuiltWithUnrealBuildTool|Win32
-		{BF765963-ACDB-4472-BEB8-4C995421D17B}.Shipping|Windows.ActiveCfg = BuiltWithUnrealBuildTool|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548} = {6B9EA3DE-8683-44FF-B949-B7C49380B3E9}
-		{BF765963-ACDB-4472-BEB8-4C995421D17B} = {661FCBFC-6C65-4905-B1AC-F653C5DF7F5B}
+		{BF765963-ACDB-4472-BEB8-4C995421D17B} = {9C869709-7701-43D7-B600-15C472F1267B}
+		{AC97A170-7004-4DFC-B482-8B2DAF23F548} = {4174669B-143B-4C24-8035-257FB6C0522D}
 	EndGlobalSection
 EndGlobal
