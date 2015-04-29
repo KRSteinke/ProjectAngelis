@@ -21,6 +21,9 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	public:
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
+	int32 GetHealth();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	AWeapon* GetCurrentWeapon();
 
 	UPROPERTY(EditDefaultsOnly, Category = DefaultInv)
