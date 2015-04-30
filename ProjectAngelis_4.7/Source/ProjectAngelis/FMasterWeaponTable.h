@@ -8,53 +8,64 @@ struct FMasterWeaponTable : public FTableRowBase
 
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	FString AmmoType;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	int32 MaxAmmoReserve;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	int32 MaxAmmoClip;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	int32 WaveAmmoRegen;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	int32 InitialAmmo;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	int32 BaseDamageClose;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	int32 BaseDamageFar;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	FString DamageType;
 	
 	/** Scriptable Use Code */
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	float RateOfFire;
 	
-	UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	int32 BaseStorePrice;
 	
 	/** Scriptable Use Code */
-	//UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
-	//WeaponModel;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
+	USkeletalMeshComponent* WeaponMesh;
 	
 	/** Scriptable Use Code */
-	//UPROPERTY(BlueprintReadOnly, Category = "Weapon_Table")
-	//ProjectileModel;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
+	UStaticMeshComponent* ProjectileMesh;
 	
+	/** Scriptable Use Code */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
+	UStaticMeshComponent* ProjectileMesh;
 	
+	/** Scriptable Use Code */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
+	UParticleSystem* WeaponTracerFX;
+	
+	/** Scriptable Use Code */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
+	UStaticMeshComponent* AmmoClipPickupMesh;
+
 	
 		
 	FMasterWeaponTable(){
