@@ -114,6 +114,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 	int32 CurrentClip;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+		UAnimationAsset* fireMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+		UAnimationAsset* reloadMontage;
+
 	AWeapon(const class FObjectInitializer& PCIP);	
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)

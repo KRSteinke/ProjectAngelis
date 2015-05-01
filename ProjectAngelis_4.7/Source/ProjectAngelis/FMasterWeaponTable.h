@@ -56,10 +56,6 @@ struct FMasterWeaponTable : public FTableRowBase
 	
 	/** Scriptable Use Code */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
-	UStaticMeshComponent* ProjectileMesh;
-	
-	/** Scriptable Use Code */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon_Table")
 	UParticleSystem* WeaponTracerFX;
 	
 	/** Scriptable Use Code */
