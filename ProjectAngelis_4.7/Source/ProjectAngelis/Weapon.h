@@ -109,6 +109,19 @@ public:
 	void DetachFromPlayer();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+		int32 MaxAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+		int32 MaxClip;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+		UTexture2D* SplashArt;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+		float TimeBetweenShots;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 	int32 CurrentAmmo;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
@@ -116,6 +129,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 		UAnimationAsset* fireMontage;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 		UAnimationAsset* reloadMontage;
 
