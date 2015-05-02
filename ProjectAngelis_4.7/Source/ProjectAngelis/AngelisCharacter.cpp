@@ -144,6 +144,11 @@ void AAngelisCharacter::FireWeapon()
 	}
 }
 
+bool AAngelisCharacter::IsWeaponNull()
+{
+	return (CurrentWeapon == NULL);
+}
+
 AWeapon* AAngelisCharacter::GetCurrentWeapon()
 {
 		return CurrentWeapon;

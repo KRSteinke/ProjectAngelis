@@ -154,4 +154,7 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 		virtual void Use();
 	virtual void Use_Implementation();
 	virtual bool Use_Validate();
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	bool IsWeaponNull();
 };
