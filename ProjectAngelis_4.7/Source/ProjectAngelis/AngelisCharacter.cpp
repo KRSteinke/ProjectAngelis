@@ -335,6 +335,7 @@ void AAngelisCharacter::IncreaseHealth(int32 IncreaseValue){
 
 void AAngelisCharacter::IncreasePoints(int32 IncreaseValue){
 	Wallet += IncreaseValue;
+	Score += IncreaseValue;
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::FromInt(Wallet));
 }
 
@@ -442,3 +443,15 @@ bool AAngelisCharacter::Use_Validate()
 	// No special server-side validation performed.
 	return true;
 }
+
+int32 AAngelisCharacter::getWallet()
+{
+	return Wallet;
+}
+
+int32 AAngelisCharacter::getScore()
+{
+	return Score;
+}
+
+
