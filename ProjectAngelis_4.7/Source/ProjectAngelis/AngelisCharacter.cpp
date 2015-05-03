@@ -19,7 +19,7 @@ AAngelisCharacter::AAngelisCharacter(const class FObjectInitializer& PCIP)
 	CurrentWeapon = NULL;
 
 	//UsableActor
-	MaxUseDistance = 800;
+	MaxUseDistance = 8000;
 	bHasNewFocus = true;
 
 	Inventory.SetNum(3, false);
