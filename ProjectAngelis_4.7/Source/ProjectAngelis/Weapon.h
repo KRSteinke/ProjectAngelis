@@ -92,6 +92,10 @@ struct FWeaponData
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 	int32 Priority;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	int32 Damage;
+
 };
 
 UCLASS()

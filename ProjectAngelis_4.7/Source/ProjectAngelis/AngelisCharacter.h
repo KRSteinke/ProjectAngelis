@@ -23,6 +23,8 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	int32 GetHealth();
 
+	
+
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	AWeapon* GetCurrentWeapon();
 
@@ -145,6 +147,10 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	UPROPERTY(EditDefaultsOnly, Category = Wallet)
 	int32 Wallet;
 
+	UPROPERTY(EditDefaultsOnly, Category = Wallet)
+	int32 Score;
+
+
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void IncreasePoints(int32 IncreaseValue);
 	UFUNCTION(BlueprintCallable, Category = Weapon)
@@ -157,4 +163,13 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	bool IsWeaponNull();
+
+	UFUNCTION(BlueprintCallable, Category = Wallet)
+	int32 getWallet();
+
+	UFUNCTION(BlueprintCallable, Category = Wallet)
+	int32 getScore();
+
+
+
 };
