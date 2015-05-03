@@ -36,6 +36,7 @@ void AWeapon::Fire()
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
 		ProjectileFire();
 	}
+	CurrentClip -= WeaponConfig.ShotCost;
 }
 
 void AWeapon::SetOwningPawn(AAngelisCharacter * NewOwner)
@@ -111,7 +112,7 @@ void AWeapon::Instant_Fire()
 		const FHitResult Impact = WeaponTrace(StartTrace, EndTrace);
 
 		ProcessInstantHit(Impact, StartTrace, ShootDir, RandomSeed, CurrentSpread);
-		CurrentClip -= WeaponConfig.ShotCost;
+		//CurrentClip -= WeaponConfig.ShotCost;
 	}
 	else
 	{
