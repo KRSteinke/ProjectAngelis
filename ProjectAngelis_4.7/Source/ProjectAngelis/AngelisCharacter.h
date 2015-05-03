@@ -53,7 +53,7 @@ class PROJECTANGELIS_API AAngelisCharacter : public ACharacter
 	void Die();
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-	void FireWeapon();
+	bool FireWeapon();
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void NextWeapon();

@@ -132,15 +132,16 @@ void AAngelisCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 	InputComponent->BindAction("Use", IE_Pressed, this, &AAngelisCharacter::Use);
 }*/
 
-void AAngelisCharacter::FireWeapon()
+bool AAngelisCharacter::FireWeapon()
 {
 	if (CurrentWeapon != NULL)
 	{
-		CurrentWeapon->Fire();
+		return CurrentWeapon->Fire();
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in Hand");
+		return false;
 	}
 }
 

@@ -16,27 +16,30 @@ AWeapon::AWeapon(const class FObjectInitializer& PCIP)
 	WeaponMesh->AttachTo(RootComponent);
 }
 
-void AWeapon::Fire()
+bool AWeapon::Fire()
 {
+	bool enemyhit = false;
 	if (ProjectileType == EWeaponProjectile::EBullet)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
-		Instant_Fire();
+		enemyhit = Instant_Fire();
 	}
 	if (ProjectileType == EWeaponProjectile::ESpread)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
 		for (int32 i = 0; i <= WeaponConfig.WeaponSpread; i++)
 		{
-			Instant_Fire();
+			enemyhit = Instant_Fire();
+
 		}
 	}
 	if (ProjectileType == EWeaponProjectile::EProjectile)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
-		ProjectileFire();
+		ProjectileFire();		
 	}
 	CurrentClip -= WeaponConfig.ShotCost;
+	return enemyhit;
 }
 
 void AWeapon::SetOwningPawn(AAngelisCharacter * NewOwner)
@@ -97,7 +100,7 @@ void AWeapon::ReloadAmmo()
 	}
 }
 
-void AWeapon::Instant_Fire()
+bool AWeapon::Instant_Fire()
 {
 	if (CurrentClip > 0)
 	{
@@ -111,12 +114,13 @@ void AWeapon::Instant_Fire()
 		const FVector EndTrace = StartTrace + ShootDir * WeaponConfig.WeaponRange;
 		const FHitResult Impact = WeaponTrace(StartTrace, EndTrace);
 
-		ProcessInstantHit(Impact, StartTrace, ShootDir, RandomSeed, CurrentSpread);
+		return ProcessInstantHit(Impact, StartTrace, ShootDir, RandomSeed, CurrentSpread);
 		//CurrentClip -= WeaponConfig.ShotCost;
 	}
 	else
 	{
 		ReloadAmmo();
+		return false;
 	}
 }
 
@@ -136,7 +140,7 @@ FHitResult AWeapon::WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo
 	return Hit;
 }
 
-void AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread)
+bool AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread)
 {
 	const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
 	const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
@@ -153,7 +157,9 @@ void AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin,
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A CHARACTER!!");
 		Character->DecreaseHealth(10);
+		return true;
 	}
+	return false;
 }
 
 void AWeapon::ProjectileFire()
