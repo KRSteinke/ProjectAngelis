@@ -178,7 +178,7 @@ CurrentWeapon = Spawner;
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in Hand");
+			//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in Hand");
 		}
 	}
 
@@ -203,8 +203,8 @@ CurrentWeapon = Spawner;
 				EquipWeapon(Inventory[1]);
 			else if (Inventory[2] != NULL)
 				EquipWeapon(Inventory[2]);
-			else
-				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+			//else
+				//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 		}
 	}
 
@@ -268,8 +268,8 @@ CurrentWeapon = Spawner;
 				EquipWeapon(Inventory[1]);
 			else if (Inventory[2] != NULL)
 				EquipWeapon(Inventory[2]);
-			else
-				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+			//else
+				//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 		}
 	}
 
@@ -375,7 +375,7 @@ CurrentWeapon = Spawner;
 				if (Spawner)
 				{
 					Inventory[Spawner->WeaponConfig.Priority] = Spawner;
-					GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "You just picked up a " + Inventory[Spawner->WeaponConfig.Priority]->WeaponConfig.Name);
+					//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "You just picked up a " + Inventory[Spawner->WeaponConfig.Priority]->WeaponConfig.Name);
 				}
 				Weapon->Destroy();
 			}
@@ -384,7 +384,7 @@ CurrentWeapon = Spawner;
 				if (Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo >= 0 && Weapon->CurrentAmmo <= (Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo - Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo))
 				{
 					Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo += Weapon->CurrentAmmo;
-					GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Added " + Weapon->CurrentAmmo);
+					//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Added " + Weapon->CurrentAmmo);
 					Weapon->Destroy();
 				}
 				else{
@@ -401,7 +401,7 @@ CurrentWeapon = Spawner;
 
 	void AWeaponEssentialsCharacter::DecreaseHealth(int32 DecreaseValue){
 		Health -= DecreaseValue;
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "DecreaseHealth");
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "DecreaseHealth");
 		if (Health == 0)
 			Die();
 	}
@@ -414,7 +414,7 @@ CurrentWeapon = Spawner;
 	{
 		this->Destroy();
 		this->CurrentWeapon->Destroy();
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "Die");
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "Die");
 	}
 
 	/*void AWeaponEssentialsCharacter::EquipPistol()

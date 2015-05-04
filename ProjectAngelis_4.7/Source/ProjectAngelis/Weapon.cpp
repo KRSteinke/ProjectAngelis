@@ -21,12 +21,12 @@ AActor* AWeapon::Fire()
 	AActor* enemyhit = NULL;
 	if (ProjectileType == EWeaponProjectile::EBullet)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
 		enemyhit = Instant_Fire();
 	}
 	if (ProjectileType == EWeaponProjectile::ESpread)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
 		for (int32 i = 0; i <= WeaponConfig.WeaponSpread; i++)
 		{
 			enemyhit = Instant_Fire();
@@ -35,7 +35,7 @@ AActor* AWeapon::Fire()
 	}
 	if (ProjectileType == EWeaponProjectile::EProjectile)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
 		ProjectileFire();		
 	}
 	CurrentClip -= WeaponConfig.ShotCost;
@@ -96,7 +96,7 @@ void AWeapon::ReloadAmmo()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0, FColor::Blue, "No Ammo");
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0, FColor::Blue, "No Ammo");
 	}
 }
 
@@ -144,18 +144,18 @@ AActor* AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Orig
 {
 	const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
 	const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
-	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Black, true, 10000, 10.f);
+	//DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Black, true, 10000, 10.f);
 
 	AEnemy *Enemy = Cast<AEnemy>(Impact.GetActor());
 	if (Enemy)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
 		Enemy->Destroy();
 	}
 	AAngelisCharacter *Character = Cast<AAngelisCharacter>(Impact.GetActor());
 	if (Character)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A CHARACTER!!");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A CHARACTER!!");
 		Character->DecreaseHealth(WeaponConfig.Damage);
 	}
 	return Impact.GetActor();

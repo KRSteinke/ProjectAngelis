@@ -140,7 +140,7 @@ AActor* AAngelisCharacter::FireWeapon()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in Hand");
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in Hand");
 		return NULL;
 	}
 }
@@ -198,7 +198,7 @@ void AAngelisCharacter::ProcessWeaponPickup(AWeapon *Weapon)
 			if (Spawner)
 			{
 				Inventory[Spawner->WeaponConfig.Priority] = Spawner;
-				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "You just picked up a " + Inventory[Spawner->WeaponConfig.Priority]->WeaponConfig.Name);
+				//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "You just picked up a " + Inventory[Spawner->WeaponConfig.Priority]->WeaponConfig.Name);
 			}
 			Weapon->Destroy();
 		}
@@ -207,7 +207,7 @@ void AAngelisCharacter::ProcessWeaponPickup(AWeapon *Weapon)
 			if (Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo >= 0 && Weapon->CurrentAmmo <= (Inventory[Weapon->WeaponConfig.Priority]->WeaponConfig.MaxAmmo - Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo))
 			{
 				Inventory[Weapon->WeaponConfig.Priority]->CurrentAmmo += Weapon->CurrentAmmo;
-				GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Added " + Weapon->CurrentAmmo);
+				//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Added " + Weapon->CurrentAmmo);
 				Weapon->Destroy();
 			}
 			else{
@@ -244,7 +244,7 @@ void AAngelisCharacter::NextWeapon()
 				return;
 			}
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 	}
 }
 
@@ -269,7 +269,7 @@ void AAngelisCharacter::PrevWeapon()
 				return;
 			}
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "No Weapon in inventory");
 	}
 }
 
@@ -322,7 +322,7 @@ int32 AAngelisCharacter::GetHealth()
 
 void AAngelisCharacter::DecreaseHealth(int32 DecreaseValue){
 	Health -= DecreaseValue;
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "DecreaseHealth");
+	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "DecreaseHealth");
 	if (Health == 0)
 		Die();
 }
@@ -337,13 +337,13 @@ void AAngelisCharacter::IncreaseHealth(int32 IncreaseValue){
 void AAngelisCharacter::IncreasePoints(int32 IncreaseValue){
 	Wallet += IncreaseValue;
 	Score += IncreaseValue;
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::FromInt(Wallet));
+	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::FromInt(Wallet));
 }
 
 void AAngelisCharacter::DecreasePoints(int32 DecreaseValue){
 	if (Wallet - DecreaseValue >= 0)
 		Wallet -= DecreaseValue;
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::FromInt(Wallet));
+	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::FromInt(Wallet));
 }
 
 
@@ -352,7 +352,7 @@ void AAngelisCharacter::Die()
 	if (CurrentWeapon != NULL)
 		this->CurrentWeapon->Destroy();
 	this->Destroy();	
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "Die");
+	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "Die");
 }
 /*
 void AAngelisCharacter::TurnAtRate(float Rate)
