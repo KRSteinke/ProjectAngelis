@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{BD02D6E3-002F-4D77-A6E1-36BC9A267265}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{49AF3C20-1B11-4665-8E02-B74289963AB4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{88D6B6C9-49C6-4C2A-B063-882FEA0EDBF0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{DFAD3E35-D08B-439B-A0D0-3BF064E8A4B7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjectAngelis", "Intermediate\ProjectFiles\ProjectAngelis.vcxproj", "{AC97A170-7004-4DFC-B482-8B2DAF23F548}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjectAngelis", "Intermediate\ProjectFiles\ProjectAngelis.vcxproj", "{97229375-BA7E-4A13-8401-6E1AD61C455C}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UE4", "Intermediate\ProjectFiles\UE4.vcxproj", "{BF765963-ACDB-4472-BEB8-4C995421D17B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UE4", "Intermediate\ProjectFiles\UE4.vcxproj", "{4BB32D82-A6B2-49EC-9748-BB2945DC6546}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,22 +20,22 @@ Global
 		Shipping|Windows = Shipping|Windows
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.DebugGame Editor|Windows.ActiveCfg = DebugGame_Editor|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.DebugGame Editor|Windows.Build.0 = DebugGame_Editor|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.DebugGame|Windows.ActiveCfg = DebugGame_Game|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.DebugGame|Windows.Build.0 = DebugGame_Game|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Development Editor|Windows.ActiveCfg = Development_Editor|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Development Editor|Windows.Build.0 = Development_Editor|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Development|Windows.ActiveCfg = Development_Game|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Development|Windows.Build.0 = Development_Game|x64
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Shipping|Windows.ActiveCfg = Shipping_Game|Win32
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548}.Shipping|Windows.Build.0 = Shipping_Game|Win32
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.DebugGame Editor|Windows.ActiveCfg = DebugGame_Editor|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.DebugGame Editor|Windows.Build.0 = DebugGame_Editor|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.DebugGame|Windows.ActiveCfg = DebugGame_Game|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.DebugGame|Windows.Build.0 = DebugGame_Game|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.Development Editor|Windows.ActiveCfg = Development_Editor|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.Development Editor|Windows.Build.0 = Development_Editor|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.Development|Windows.ActiveCfg = Development_Game|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.Development|Windows.Build.0 = Development_Game|x64
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.Shipping|Windows.ActiveCfg = Shipping_Game|Win32
+		{97229375-BA7E-4A13-8401-6E1AD61C455C}.Shipping|Windows.Build.0 = Shipping_Game|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BF765963-ACDB-4472-BEB8-4C995421D17B} = {BD02D6E3-002F-4D77-A6E1-36BC9A267265}
-		{AC97A170-7004-4DFC-B482-8B2DAF23F548} = {88D6B6C9-49C6-4C2A-B063-882FEA0EDBF0}
+		{4BB32D82-A6B2-49EC-9748-BB2945DC6546} = {49AF3C20-1B11-4665-8E02-B74289963AB4}
+		{97229375-BA7E-4A13-8401-6E1AD61C455C} = {DFAD3E35-D08B-439B-A0D0-3BF064E8A4B7}
 	EndGlobalSection
 EndGlobal
