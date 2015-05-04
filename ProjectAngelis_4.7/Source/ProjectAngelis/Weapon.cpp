@@ -156,7 +156,7 @@ bool AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin,
 	if (Character)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A CHARACTER!!");
-		Character->DecreaseHealth(10);
+		Character->DecreaseHealth(WeaponConfig.Damage);
 		return true;
 	}
 	return false;
