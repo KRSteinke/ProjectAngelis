@@ -140,7 +140,7 @@ public:
 	AWeapon(const class FObjectInitializer& PCIP);	
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-	bool Instant_Fire();
+	AActor* Instant_Fire();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Weapon)
 	TEnumAsByte<EWeaponProjectile::ProjectileType> ProjectileType;
@@ -152,7 +152,7 @@ public:
 	USkeletalMeshComponent* WeaponMesh;
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-	bool Fire();
+	AActor* Fire();
 
 	UPROPERTY(EditDefaultsOnly, Category = Config)
 	FWeaponData WeaponConfig;
@@ -179,7 +179,7 @@ public:
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-	bool ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
+	AActor* ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
 
 	AAngelisCharacter *MyPawn;
 

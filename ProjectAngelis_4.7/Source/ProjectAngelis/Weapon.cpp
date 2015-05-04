@@ -16,9 +16,9 @@ AWeapon::AWeapon(const class FObjectInitializer& PCIP)
 	WeaponMesh->AttachTo(RootComponent);
 }
 
-bool AWeapon::Fire()
+AActor* AWeapon::Fire()
 {
-	bool enemyhit = false;
+	AActor* enemyhit = NULL;
 	if (ProjectileType == EWeaponProjectile::EBullet)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
@@ -100,7 +100,7 @@ void AWeapon::ReloadAmmo()
 	}
 }
 
-bool AWeapon::Instant_Fire()
+AActor* AWeapon::Instant_Fire()
 {
 	if (CurrentClip > 0)
 	{
@@ -120,7 +120,7 @@ bool AWeapon::Instant_Fire()
 	else
 	{
 		ReloadAmmo();
-		return false;
+		return NULL;
 	}
 }
 
@@ -140,7 +140,7 @@ FHitResult AWeapon::WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo
 	return Hit;
 }
 
-bool AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread)
+AActor* AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread)
 {
 	const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
 	const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
@@ -157,9 +157,8 @@ bool AWeapon::ProcessInstantHit(const FHitResult &Impact, const FVector &Origin,
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A CHARACTER!!");
 		Character->DecreaseHealth(WeaponConfig.Damage);
-		return true;
 	}
-	return false;
+	return Impact.GetActor();
 }
 
 void AWeapon::ProjectileFire()
