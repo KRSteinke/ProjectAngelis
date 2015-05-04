@@ -166,3 +166,8 @@ void AWeapon::ProjectileFire()
 {
 
 }
+
+int AWeapon::GetDamage()
+{
+	return WeaponConfig.Damage;
+}
